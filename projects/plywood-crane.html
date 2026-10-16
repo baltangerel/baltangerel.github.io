@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lightweight Plywood Crane | Ben Altangerel</title>
+  <meta name="description" content="Design, FEA and live testing of the lightest possible laser-cut plywood crane to lift an 18 kg mass, with a safe and a risky design.">
+  <meta property="og:title" content="Lightweight Plywood Crane | Ben Altangerel">
+  <meta property="og:description" content="Designing the lightest plywood crane to lift 18 kg: FEA, buckling analysis and live test-day results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">MEC209 Design of Structures, Machines &amp; Systems &middot; University of Sheffield &middot; 2023 &middot; Team project</p>
+        <h1>Lightweight Plywood Crane</h1>
+        <p class="summary">
+          The challenge: build the <strong>lightest possible structure</strong> from 3&nbsp;mm laser-cut plywood and PVA glue that can lift an
+          <strong>18&nbsp;kg mass</strong>. As <strong>Structures Lead</strong>, I designed our team's two cranes, a "safe" design and a
+          lightweight "risky" one. <strong>Both lifted the mass easily, with no fractures or buckling</strong>, and our lightweight design placed <strong>3rd of 42 teams</strong>.
+        </p>
+
+        <img class="cover" src="../images/crane/crane-built.jpg" style="max-height: 620px; object-position: 40% 50%" alt="The finished laser-cut plywood lattice-truss crane on a workshop bench">
+
+        <div class="results">
+          <div><strong>2 of 2</strong><span>designs lifted the 18&nbsp;kg mass, with no fractures or buckling</span></div>
+          <div><strong>3rd of 42</strong><span>teams for the lightest successful structure</span></div>
+          <div><strong>0.28&times; &rarr; 4.5&times;</strong><span>buckling load raised in my FEA by adding interlocking cross-supports</span></div>
+          <div><strong>54 g</strong><span>my FEA-optimised risky design, at a 1.8 safety factor</span></div>
+        </div>
+        <p class="specs">Fusion 360 &middot; FEA (static stress &amp; buckling) &middot; Mesh convergence &middot; Material testing &middot; Laser cutting &middot; Design for manufacture</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>The brief</h2>
+      <ul>
+        <li>Lift an 18&nbsp;kg mass at least 10&nbsp;mm and hold it for 5 seconds, using a hand winch and a cable over two pulleys.</li>
+        <li>The mass must hang at least 150&nbsp;mm beyond the base plate, so the structure has to reach out like a crane.</li>
+        <li>Only 3&nbsp;mm poplar plywood (cut from a single 400&nbsp;&times;&nbsp;300&nbsp;mm sheet) and PVA glue.</li>
+        <li>Scored on weight: the lightest working structure in the year group sets the benchmark, so every gram counts.</li>
+      </ul>
+
+      <h2>My role: Structures Lead</h2>
+      <!-- TODO (Ben): add anything else you did (e.g. prepared the laser-cutting files, ran the prototype test) -->
+      <p>
+        I designed the structure of both of our team's cranes. They were deliberately different approaches to the same weight-versus-risk trade-off.
+      </p>
+
+      <h2>Two designs, live tested</h2>
+      <div class="gallery docs">
+        <figure>
+          <img src="../images/crane/safe-photo.jpg" alt="The safe lattice-truss crane in the test rig">
+          <figcaption>Safe design in the test rig</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/crane/risky-photo.jpg" alt="The risky minimal two-arm crane in the test rig">
+          <figcaption>Risky design in the test rig</figcaption>
+        </figure>
+      </div>
+      <h3>Test day</h3>
+      <div class="gallery docs">
+        <figure>
+          <video class="clip" src="../images/crane/safe-test.mp4" poster="../images/crane/safe-poster.jpg" autoplay muted loop playsinline controls preload="metadata"
+            aria-label="Test day video of the safe lattice-truss crane being loaded"></video>
+          <figcaption><strong>Safe design:</strong> a triangulated lattice-truss boom. It spreads the load through many short members that resist buckling.</figcaption>
+        </figure>
+        <figure>
+          <video class="clip" src="../images/crane/risky-test.mp4" poster="../images/crane/risky-poster.jpg" autoplay muted loop playsinline controls preload="metadata"
+            aria-label="Test day video of the risky lightweight crane being loaded"></video>
+          <figcaption><strong>Risky design:</strong> a minimal two-arm boom with as much material removed as possible, to push the weight down.</figcaption>
+        </figure>
+      </div>
+      <p><strong>Result:</strong> both cranes lifted the 18&nbsp;kg mass easily, with no fractures or buckling. Our lightweight design finished <strong>3rd out of 42 teams</strong> for the lightest structure to succeed.</p>
+
+      <h2>My individual FEA study</h2>
+      <p>
+        Alongside the group build, I designed and optimised my own safe and risky cranes in Fusion 360. I used plywood properties
+        from our own tensile tests (24.9&nbsp;MPa strength along the grain) and checked both static stress and buckling.
+      </p>
+      <ul>
+        <li><strong>Buckling, not stress, was the real limit.</strong> My first safe design had a healthy stress safety factor (2.9), but it would have buckled at just 0.28&times; the load. Adding interlocking cross-supports between the two side panels raised the first buckling mode to <strong>4.5&times;</strong>, for a final safety factor of 3.4 at 129&nbsp;g.</li>
+        <li><strong>Risky design optimised step by step:</strong>
+          <ul>
+            <li>The initial design, at 65&nbsp;g, would buckle at 0.81&times; the load.</li>
+            <li>Adding support plates raised this to 1.24&times;.</li>
+            <li>The stress plots showed the top plate was barely loaded, so I moved it to the short arm. That shifted the deflection to the front pulley and raised buckling to 1.82&times;, giving a final weight of 54&nbsp;g and a safety factor of 1.8.</li>
+          </ul>
+        </li>
+        <li><strong>Results checked for accuracy:</strong> mesh convergence came in under the 3% tolerance for both designs.</li>
+      </ul>
+      <div class="gallery quad">
+        <figure>
+          <img src="../images/crane/fea-safe-initial.jpg" alt="Fusion 360 stress plot of the first safe design">
+          <figcaption>Safe design, first draft: low stress, but it would buckle at 0.28&times; the load</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/crane/fea-safe-final.jpg" alt="Fusion 360 stress plot of the final safe design">
+          <figcaption>Safe design, final: safety factor 3.4</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/crane/fea-risky-buckling.jpg" alt="Fusion 360 buckling analysis of the risky design with support plates">
+          <figcaption>Risky design with support plates: buckling at 1.24&times; the load</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/crane/fea-risky-final.jpg" alt="Fusion 360 buckling analysis of the final risky design">
+          <figcaption>Risky design, final: buckling raised to 1.82&times;, at 54&nbsp;g</figcaption>
+        </figure>
+      </div>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Check buckling, not just stress.</strong> Thin, light structures fail by buckling long before the material yields. A design that looks safe on a stress plot can still collapse.</li>
+        <li><strong>Use the stress results to remove material.</strong> Low-stress regions show where weight can come out, or where a stiffener does more good somewhere else.</li>
+        <li><strong>Respect the material.</strong> Plywood is much stronger along the grain and varies from sheet to sheet, so grain direction and safety margin are real design choices.</li>
+      </ul>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engine Mount Ageing FEA | Ben Altangerel</title>
+  <meta name="description" content="ANSYS finite element model of a new and service-aged automotive engine mount, validated against digital image correlation test data.">
+  <meta property="og:title" content="Engine Mount Ageing FEA | Ben Altangerel">
+  <meta property="og:description" content="ANSYS FEA of new vs. service-aged engine mounts, validated against digital image correlation experiments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">MEC445 Industrial Applications of Finite Element Analysis &middot; University of Sheffield &middot; 2024 &middot; Individual project</p>
+        <h1>How Engine Mounts Age: FEA Validated Against Experiment</h1>
+        <p class="summary">
+          Engine mounts isolate a car's vibration through a rubber main spring, and that rubber changes with mileage. I built an
+          <strong>ANSYS finite element model</strong> of a new mount and one aged by about 130,000&nbsp;km of service, and
+          <strong>validated it against digital image correlation (DIC) test data</strong>.
+        </p>
+
+        <div class="gallery docs hero-pair">
+          <figure>
+            <img src="../images/engine-mount/strain-new.jpg" alt="Maximum principal strain in the new engine mount under 3 mm compression">
+            <figcaption>New mount: maximum principal strain at 3&nbsp;mm compression</figcaption>
+          </figure>
+          <figure>
+            <img src="../images/engine-mount/strain-aged.jpg" alt="Maximum principal strain in the service-aged engine mount under 3 mm compression">
+            <figcaption>Aged mount: larger, more concentrated high-strain zones</figcaption>
+          </figure>
+        </div>
+
+        <div class="results">
+          <div><strong>+50%</strong><span>peak strain in the aged mount (0.30 &rarr; 0.45)</span></div>
+          <div><strong>~9%</strong><span>difference from measured DIC strain at a matched location</span></div>
+          <div><strong>1.2%</strong><span>change between 3&nbsp;mm and 2&nbsp;mm meshes in the convergence study</span></div>
+          <div><strong>&frac14; model</strong><span>using symmetry, so the mesh could be refined where it mattered</span></div>
+        </div>
+        <p class="specs">ANSYS Workbench &middot; Static structural FEA &middot; Elastomers &middot; Mesh convergence &middot; Verification &amp; validation &middot; Digital image correlation</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>The problem</h2>
+      <p>
+        A compression test had been run on real engine mounts, new and service-aged, with the strain in the rubber measured optically by 3D DIC.
+        The task was to build a finite element model of those tests, compare it with the experimental strain fields, explain any differences,
+        and show how industry could use the model. The test data comes from published research by Tang, Soltani, Pinna, Wagg and Whear (2018).
+      </p>
+
+      <h2>Modelling strategy</h2>
+      <ul>
+        <li><strong>Material from test data:</strong> the rubber's stress&ndash;strain curve is linear up to 15% strain, so I modelled it as linear elastic (E&nbsp;=&nbsp;3.7&nbsp;MPa, &nu;&nbsp;=&nbsp;0.499), with aluminium for the tip and rib.</li>
+        <li><strong>Quarter model with symmetry:</strong> cutting the geometry to a quarter, with symmetry constraints, stopped unrealistic bulging of the cut faces and freed up elements for refinement.</li>
+        <li><strong>Targeted meshing:</strong> I split the rubber spring into three bodies and used spheres of influence (1.2&nbsp;mm elements) only at the high-strain regions, with Tet10 elements for the complex rubber and Hex20 for the rib.</li>
+        <li><strong>Loading:</strong> the base was fixed and a vertical displacement was applied to the tip, matching the test rig. The aged model used the deformed geometry measured after service.</li>
+      </ul>
+      <div class="gallery docs">
+        <figure>
+          <img src="../images/engine-mount/model-bodies.jpg" alt="Engine mount quarter model with the rubber main spring split into three bodies">
+          <figcaption>Rubber main spring split into three bodies for targeted meshing</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/engine-mount/mesh-convergence.png" alt="Mesh convergence plot of element size against maximum principal strain">
+          <figcaption>Mesh convergence: stable at 2&ndash;3&nbsp;mm, numerically unstable below 1.5&nbsp;mm</figcaption>
+        </figure>
+      </div>
+
+      <h2>Validation</h2>
+      <p>
+        The FEA reproduced <strong>where</strong> the rubber strains: the same high-strain regions appear in both the model and the DIC measurements,
+        for both the new and the aged mount. At a matched location the model gave 0.038 strain against roughly 0.035 measured. Peak values were
+        slightly overestimated, which I traced to simplifications: isotropic linear rubber, bonded contacts, and DIC's own speckle and calibration noise.
+      </p>
+      <figure class="diagram">
+        <img src="../images/engine-mount/dic-experiment.jpg" alt="Measured DIC maximum principal strain maps for a new and a service-aged engine mount" style="max-width: 640px; margin: 0 auto; display: block">
+        <figcaption>Measured DIC strain maps for the new and aged mounts, used to validate the model (Tang et al., 2018)</figcaption>
+      </figure>
+      <p>
+        <strong>Why it matters for industry:</strong> a validated ageing model can predict how a mount's stiffness changes over its life, which supports
+        service-interval planning, durability-focused design, and keeping noise isolation consistent as a vehicle ages.
+      </p>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Finer isn't always better.</strong> Below 1.5&nbsp;mm the mesh became numerically unstable. A convergence study shows where results become trustworthy, not just how small the elements can go.</li>
+        <li><strong>Validate against measurement.</strong> Matching the strain pattern to real DIC data is what makes the model credible enough to use.</li>
+        <li><strong>Next steps:</strong> a hyperelastic rubber model, temperature-dependent properties from DMTA testing, and dynamic loading.</li>
+      </ul>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

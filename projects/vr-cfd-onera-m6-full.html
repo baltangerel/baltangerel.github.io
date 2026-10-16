@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulating Flows Through VR: Full Write-up | Ben Altangerel</title>
+  <meta name="description" content="MEng dissertation: transonic CFD of the ONERA M6 wing in ANSYS Fluent, validated against experiment and visualised in an interactive Unity VR environment on the Meta Quest 2.">
+  <meta property="og:title" content="Understanding and Simulating Flows Through VR | Ben Altangerel">
+  <meta property="og:description" content="Transonic CFD of the ONERA M6 wing, validated against wind tunnel data and explored in an interactive VR environment built in Unity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="vr-cfd-onera-m6.html" class="back-link">&larr; Back to the summary</a>
+        <p class="eyebrow">MEng Dissertation &middot; University of Sheffield &middot; 2025 &middot; Full write-up</p>
+        <h1>Understanding and Simulating Flows Through VR</h1>
+        <p class="summary">
+          I simulated transonic airflow over the ONERA M6 wing in ANSYS Fluent, validated the results against
+          wind tunnel data, and built an interactive virtual reality environment in Unity that lets you walk
+          around the wing, slide through pressure planes, watch the flow animate and probe velocities with
+          a VR controller.
+        </p>
+
+        <img class="cover" src="../images/vr-cfd/vr-particle-flow.jpg" alt="Animated particle velocity field flowing over the ONERA M6 wing inside the Unity VR environment, with play, pause and restart buttons">
+
+        <dl class="facts">
+          <div><dt>Type</dt><dd>MEng final-year individual project</dd></div>
+          <div><dt>Supervisor</dt><dd>Dr John W Fenner</dd></div>
+          <div><dt>Flow case</dt><dd>ONERA M6, Mach 0.84, Re 11.72&times;10<sup>6</sup></dd></div>
+          <div><dt>CFD tools</dt><dd>ANSYS Fluent, DesignModeler, ParaView, CFD-Post</dd></div>
+          <div><dt>VR tools</dt><dd>Unity 6, C#, XR Interaction Toolkit, Blender</dd></div>
+          <div><dt>Hardware</dt><dd>Meta Quest 2</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <div class="results">
+        <div><strong>1.2%</strong><span>Lift coefficient error vs. experiment at &alpha; = 3.06&deg; (fine mesh)</span></div>
+        <div><strong>3.48M</strong><span>Cells in the final mesh, chosen from a 4-level convergence study</span></div>
+        <div><strong>7</strong><span>Spanwise sections validated against wind tunnel C<sub>p</sub> data</span></div>
+        <div><strong>100+</strong><span>Flow fields exported from Fluent into the VR pipeline</span></div>
+      </div>
+
+      <h2>The problem</h2>
+      <p>
+        CFD lets engineers simulate airflow without a wind tunnel, but its results are still mostly viewed as
+        2D graphs and static contour plots in menu-heavy software like ParaView. That makes genuinely 3D
+        phenomena, such as shockwaves and flow separation, hard to picture, especially for students and
+        non-specialists.
+      </p>
+      <p>
+        This project asked whether virtual reality could make those phenomena more intuitive. The aim was to
+        build an immersive 3D flow visualisation environment from real, validated CFD data. Rather than
+        a textbook case like a cylinder, I chose the <strong>ONERA M6 wing</strong>, a standard transonic
+        benchmark that produces a clear upper-surface shockwave and shock-induced separation.
+      </p>
+
+      <h2>Objectives</h2>
+      <ul>
+        <li>Simulate the transonic flow field around the ONERA M6 wing in ANSYS Fluent and validate it against experimental data.</li>
+        <li>Build a pipeline to get CFD results out of engineering software and into a game engine.</li>
+        <li>Develop a VR environment in Unity to render and interact with the flow data.</li>
+        <li>Animate the flow field so it can be explored in real time.</li>
+        <li>Assess VR's value for education and analysis compared with traditional post-processing.</li>
+      </ul>
+
+      <h2>The pipeline: from solver to headset</h2>
+      <p>
+        CFD solvers and game engines don't share file formats, so a large part of the project was building a
+        reliable path between them:
+      </p>
+      <ol class="pipeline">
+        <li><strong>ANSYS Fluent</strong><span>Steady RANS simulation, exported as EnSight Gold (100+ fields)</span></li>
+        <li><strong>ParaView / CFD-Post</strong><span>Spanwise clip planes and wing surface as X3D; streamlines as CSV</span></li>
+        <li><strong>Blender</strong><span>Vertex colours linked to materials, exported as FBX</span></li>
+        <li><strong>Unity 6</strong><span>Custom shader, C# particle system, XR interaction and UI</span></li>
+        <li><strong>Meta Quest 2</strong><span>Streamed via Quest Link (USB 3.0) or Air Link</span></li>
+      </ol>
+
+      <h2>1. CFD setup</h2>
+      <h3>Geometry and domain</h3>
+      <p>
+        The ONERA M6 is a swept, semi-span wing (30&deg; leading-edge sweep, aspect ratio 3.8, taper ratio 0.562)
+        with symmetrical aerofoil sections. I imported the NASA TMR CAD geometry into DesignModeler and built a
+        hemispherical fluid domain ten root chords in diameter. A rectangular <em>body of influence</em>
+        extending 1.5&nbsp;m spanwise, beyond the wingtip, captured the wake and tip vortex.
+      </p>
+
+      <h3>Meshing</h3>
+      <p>
+        I used a tetrahedral mesh for its flexibility around the 3D wing, with local refinement where the gradients
+        are steepest: 150&nbsp;mm global sizing, 56.25&nbsp;mm in the body of influence, 5&nbsp;mm on the wing faces
+        and leading/trailing edges, and 3.75&nbsp;mm at the root and tip.
+      </p>
+      <p>
+        To resolve the boundary layer efficiently, I targeted <strong>y<sup>+</sup> &asymp; 30</strong> so the
+        Spalart&ndash;Allmaras wall functions could model the near-wall region. I worked out the first-layer
+        height from first principles:
+      </p>
+      <ul>
+        <li>Viscosity from Sutherland's law at 300&nbsp;K: &mu; = 1.846&times;10<sup>&minus;5</sup>&nbsp;kg/m&middot;s</li>
+        <li>Freestream velocity from Mach 0.84: U = 291.64&nbsp;m/s, and density from the Reynolds number: &rho; = 1.148&nbsp;kg/m&sup3;</li>
+        <li>Skin friction estimate C<sub>f</sub> = 2.54&times;10<sup>&minus;3</sup>, giving wall shear stress &tau;<sub>w</sub> = 124.1&nbsp;Pa and friction velocity u<sub>&tau;</sub> = 10.40&nbsp;m/s</li>
+        <li><strong>First inflation layer height: y = 4.64&times;10<sup>&minus;5</sup>&nbsp;m</strong></li>
+      </ul>
+
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/cfd-domain-mesh.jpg" alt="Tetrahedral mesh of the hemispherical fluid domain showing the farfield and symmetry plane">
+          <figcaption>Fluid domain mesh with farfield and symmetry plane</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cfd-surface-mesh.jpg" alt="Refined surface mesh on the ONERA M6 wing in wireframe">
+          <figcaption>Refined surface mesh on the wing</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cfd-inflation-layers.jpg" alt="Inflation layers along the aerofoil edge">
+          <figcaption>Inflation layers sized for y<sup>+</sup> &asymp; 30</figcaption>
+        </figure>
+      </div>
+
+      <h3>Solver</h3>
+      <p>
+        I chose a pressure-based solver for its stability and fast convergence in steady transonic flow, with the
+        one-equation <strong>Spalart&ndash;Allmaras</strong> turbulence model, which suits external, wall-bounded
+        aerodynamic flows. Air was modelled as an ideal gas. I ran two cases matching the experimental
+        wind tunnel tests:
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Test case</th><th>Mach</th><th>Reynolds number</th><th>Angle of attack</th><th>Flow regime</th></tr></thead>
+          <tbody>
+            <tr><td>2308</td><td>0.84</td><td>11.72&times;10<sup>6</sup></td><td>3.06&deg;</td><td>Mostly attached</td></tr>
+            <tr><td>2565</td><td>0.84</td><td>11.72&times;10<sup>6</sup></td><td>6.06&deg;</td><td>Shock-induced separation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>2. Validation against experiment</h2>
+      <h3>Mesh convergence</h3>
+      <p>
+        I ran four meshes, from 0.89 million to 7.35 million cells. Lift and drag settled as the mesh was refined,
+        and doubling the cell count from the fine to the ultra-fine mesh changed C<sub>L</sub> by less than 0.5%.
+        I therefore used the <strong>fine mesh (3.48M cells)</strong> for all results, balancing accuracy against run time.
+      </p>
+
+      <figure class="viz">
+        <div class="viz-legend" aria-hidden="true">
+          <span><i class="key s1"></i>&alpha; = 3.06&deg;</span>
+          <span><i class="key s2"></i>&alpha; = 6.06&deg;</span>
+          <span><i class="key solid"></i>CFD</span>
+          <span><i class="key dashed"></i>Experiment</span>
+        </div>
+        <div class="viz-panels">
+          <!-- Lift coefficient vs mesh. y: 0.15 to 0.55 over 240 to 30 -->
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="cl-title">
+            <title id="cl-title">Lift coefficient against mesh refinement: CFD converges towards the experimental value at 3.06 degrees and to within 10 percent at 6.06 degrees</title>
+            <text class="viz-title" x="0" y="16">Lift coefficient, C<tspan baseline-shift="sub" font-size="10">L</tspan></text>
+            <g class="viz-grid">
+              <line x1="60" x2="440" y1="213.75" y2="213.75"/><line x1="60" x2="440" y1="161.25" y2="161.25"/>
+              <line x1="60" x2="440" y1="108.75" y2="108.75"/><line x1="60" x2="440" y1="56.25" y2="56.25"/>
+            </g>
+            <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+            <g class="viz-tick" text-anchor="end">
+              <text x="52" y="217.75">0.2</text><text x="52" y="165.25">0.3</text>
+              <text x="52" y="112.75">0.4</text><text x="52" y="60.25">0.5</text>
+            </g>
+            <g class="viz-tick" text-anchor="middle">
+              <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+              <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+              <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+              <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+            </g>
+            <line class="ref s1" x1="90" x2="440" y1="179.6" y2="179.6"/>
+            <line class="ref s2" x1="90" x2="440" y1="40.5" y2="40.5"/>
+            <polyline class="series s1" points="90,219.8 207,185.5 323,181.2 440,181.0"/>
+            <polyline class="series s2" points="90,89.9 207,85.9 323,67.1 440,66.0"/>
+            <g class="pt s1">
+              <circle cx="90" cy="219.8" r="4"/><circle cx="207" cy="185.5" r="4"/><circle cx="323" cy="181.2" r="4"/><circle cx="440" cy="181.0" r="4"/>
+            </g>
+            <g class="pt s2">
+              <circle cx="90" cy="89.9" r="4"/><circle cx="207" cy="85.9" r="4"/><circle cx="323" cy="67.1" r="4"/><circle cx="440" cy="66.0" r="4"/>
+            </g>
+            <g class="hit">
+              <circle cx="90" cy="219.8" r="12"><title>Coarse (0.89M cells), α = 3.06°: CL = 0.1885</title></circle>
+              <circle cx="207" cy="185.5" r="12"><title>Medium (2.10M cells), α = 3.06°: CL = 0.2538</title></circle>
+              <circle cx="323" cy="181.2" r="12"><title>Fine (3.48M cells), α = 3.06°: CL = 0.2619 (experiment 0.265)</title></circle>
+              <circle cx="440" cy="181.0" r="12"><title>Ultra-fine (7.35M cells), α = 3.06°: CL = 0.2623</title></circle>
+              <circle cx="90" cy="89.9" r="12"><title>Coarse (0.89M cells), α = 6.06°: CL = 0.4359</title></circle>
+              <circle cx="207" cy="85.9" r="12"><title>Medium (2.10M cells), α = 6.06°: CL = 0.4436</title></circle>
+              <circle cx="323" cy="67.1" r="12"><title>Fine (3.48M cells), α = 6.06°: CL = 0.4793 (experiment 0.530)</title></circle>
+              <circle cx="440" cy="66.0" r="12"><title>Ultra-fine (7.35M cells), α = 6.06°: CL = 0.4814</title></circle>
+            </g>
+            <g class="viz-label">
+              <text x="452" y="185">3.06°</text>
+              <text x="452" y="70">6.06°</text>
+            </g>
+          </svg>
+
+          <!-- Drag coefficient vs mesh. y: 0 to 0.06 over 240 to 30 -->
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="cd-title">
+            <title id="cd-title">Drag coefficient against mesh refinement: close to experiment at 3.06 degrees, heavily over-predicted at 6.06 degrees where the flow separates</title>
+            <text class="viz-title" x="0" y="16">Drag coefficient, C<tspan baseline-shift="sub" font-size="10">D</tspan></text>
+            <g class="viz-grid">
+              <line x1="60" x2="440" y1="170" y2="170"/><line x1="60" x2="440" y1="100" y2="100"/><line x1="60" x2="440" y1="30" y2="30"/>
+            </g>
+            <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+            <g class="viz-tick" text-anchor="end">
+              <text x="52" y="244">0</text><text x="52" y="174">0.02</text>
+              <text x="52" y="104">0.04</text><text x="52" y="34">0.06</text>
+            </g>
+            <g class="viz-tick" text-anchor="middle">
+              <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+              <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+              <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+              <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+            </g>
+            <line class="ref s1" x1="90" x2="440" y1="184" y2="184"/>
+            <line class="ref s2" x1="90" x2="440" y1="149" y2="149"/>
+            <polyline class="series s1" points="90,169.8 207,180.6 323,179.8 440,180.6"/>
+            <polyline class="series s2" points="90,47.7 207,43.9 323,67.8 440,71.0"/>
+            <g class="pt s1">
+              <circle cx="90" cy="169.8" r="4"/><circle cx="207" cy="180.6" r="4"/><circle cx="323" cy="179.8" r="4"/><circle cx="440" cy="180.6" r="4"/>
+            </g>
+            <g class="pt s2">
+              <circle cx="90" cy="47.7" r="4"/><circle cx="207" cy="43.9" r="4"/><circle cx="323" cy="67.8" r="4"/><circle cx="440" cy="71.0" r="4"/>
+            </g>
+            <g class="hit">
+              <circle cx="90" cy="169.8" r="12"><title>Coarse (0.89M cells), α = 3.06°: CD = 0.0201</title></circle>
+              <circle cx="207" cy="180.6" r="12"><title>Medium (2.10M cells), α = 3.06°: CD = 0.0170</title></circle>
+              <circle cx="323" cy="179.8" r="12"><title>Fine (3.48M cells), α = 3.06°: CD = 0.0172 (experiment 0.016)</title></circle>
+              <circle cx="440" cy="180.6" r="12"><title>Ultra-fine (7.35M cells), α = 3.06°: CD = 0.0170</title></circle>
+              <circle cx="90" cy="47.7" r="12"><title>Coarse (0.89M cells), α = 6.06°: CD = 0.0549</title></circle>
+              <circle cx="207" cy="43.9" r="12"><title>Medium (2.10M cells), α = 6.06°: CD = 0.0560</title></circle>
+              <circle cx="323" cy="67.8" r="12"><title>Fine (3.48M cells), α = 6.06°: CD = 0.0492 (experiment 0.026)</title></circle>
+              <circle cx="440" cy="71.0" r="12"><title>Ultra-fine (7.35M cells), α = 6.06°: CD = 0.0483</title></circle>
+            </g>
+            <g class="viz-label">
+              <text x="452" y="186">3.06°</text>
+              <text x="452" y="75">6.06°</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Mesh convergence study (redrawn from my dissertation data). Solid lines are CFD; dashed lines are the experimental values. Hover over a point to see its value.</figcaption>
+      </figure>
+
+      <h3>Lift and drag</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Angle of attack</th><th>Mesh</th><th>C<sub>L</sub> CFD</th><th>C<sub>L</sub> exp.</th><th>C<sub>L</sub> error</th><th>C<sub>D</sub> CFD</th><th>C<sub>D</sub> exp.</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>3.06&deg;</td><td>Medium (2.10M)</td><td>0.2538</td><td rowspan="2">0.265</td><td>4.4%</td><td>0.0170</td><td rowspan="2">0.016</td></tr>
+            <tr><td>3.06&deg;</td><td>Fine (3.48M)</td><td>0.2619</td><td>1.2%</td><td>0.0172</td></tr>
+            <tr><td>6.06&deg;</td><td>Medium (2.10M)</td><td>0.4436</td><td rowspan="2">0.530</td><td>19.5%</td><td>0.0560</td><td rowspan="2">0.026</td></tr>
+            <tr><td>6.06&deg;</td><td>Fine (3.48M)</td><td>0.4793</td><td>9.6%</td><td>0.0492</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        At 3.06&deg; the simulation closely matches experiment. At 6.06&deg; it under-predicts lift and
+        over-predicts drag. That is a known limitation of the Spalart&ndash;Allmaras model, which struggles with the
+        shock-induced separation that occurs at this angle.
+      </p>
+
+      <h3>Pressure distributions</h3>
+      <p>
+        I extracted chordwise pressure coefficient (C<sub>p</sub>) distributions at all seven experimental spanwise
+        stations, from root (&eta; = 0.20) to tip (&eta; = 0.99). At 3.06&deg;, the suction peaks (C<sub>p</sub> &asymp; &minus;1.1 to &minus;1.2)
+        and the pressure recovery behind the shock line up closely with the wind tunnel data across the span.
+        At 6.06&deg;, agreement stays good at the inboard, attached-flow stations, but beyond about 65% span, where the flow separates,
+        the model under-predicts the suction peak and over-predicts the pressure recovery.
+      </p>
+      <div class="gallery two">
+        <figure>
+          <img src="../images/vr-cfd/cp-3deg-eta044.png" alt="Pressure coefficient plot at 44 percent span, 3.06 degrees: CFD and experiment agree closely">
+          <figcaption>&alpha; = 3.06&deg;, &eta; = 0.44: close agreement</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cp-3deg-eta090.png" alt="Pressure coefficient plot at 90 percent span, 3.06 degrees">
+          <figcaption>&alpha; = 3.06&deg;, &eta; = 0.90: close agreement</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cp-6deg-eta044.png" alt="Pressure coefficient plot at 44 percent span, 6.06 degrees: attached flow, good agreement">
+          <figcaption>&alpha; = 6.06&deg;, &eta; = 0.44: attached flow, good agreement</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cp-6deg-eta090.png" alt="Pressure coefficient plot at 90 percent span, 6.06 degrees: separated flow, CFD diverges from experiment">
+          <figcaption>&alpha; = 6.06&deg;, &eta; = 0.90: separated flow, the model's limit</figcaption>
+        </figure>
+      </div>
+
+      <h2>3. Flow features</h2>
+      <p>
+        The surface contours show the transonic behaviour clearly: a strong suction peak near the leading edge,
+        followed by a sharp pressure rise where the <strong>shockwave</strong> sits at roughly 50&ndash;60% chord at the root,
+        moving forward towards the tip. At 6.06&deg; the shock is stronger and further forward, and the Mach contours
+        show swirling, recirculating flow near the trailing edge, the onset of <strong>shock-induced separation</strong>.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/pressure-contours.jpg" alt="Pressure contours on the upper and lower wing surfaces at 3.06 and 6.06 degrees">
+          <figcaption>Surface pressure: upper and lower surfaces at 3.06&deg; (a, b) and 6.06&deg; (c, d)</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/mach-contours.jpg" alt="Mach number contours over the wing at 3.06 and 6.06 degrees showing the shock">
+          <figcaption>Mach number at 3.06&deg; (a) and 6.06&deg; (b), showing the shock</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/mach-recirculation.jpg" alt="Annotated Mach contour at 6.06 degrees highlighting swirling flow and recirculation">
+          <figcaption>Recirculation forming near the trailing edge at 6.06&deg;</figcaption>
+        </figure>
+      </div>
+
+      <h2>4. Building the VR environment</h2>
+      <p>
+        The VR scene runs in Unity 6 using the Universal Render Pipeline and the XR Interaction Toolkit, which provides
+        head tracking and controller interaction. I wrote the data handling and interaction systems in C#.
+      </p>
+
+      <h3>Contour planes you can grab</h3>
+      <p>
+        The seven spanwise pressure and velocity planes from ParaView sit in the scene as physical objects. Users
+        grab and slide them with the controllers to see how the flow changes from root to tip, rather than
+        comparing 2D plots side by side. To keep the colours identical to ParaView, I wrote a custom
+        unlit vertex-colour shader that renders the exported data exactly as stored:
+      </p>
+<pre><code>v2f vert (appdata v) {
+    v2f o;
+    o.pos = UnityObjectToClipPos(v.vertex);
+    o.color = v.color;          // CFD value baked into the vertex colour
+    return o;
+}
+fixed4 frag (v2f i) : SV_Target { return i.color; }   // no lighting: true data colours</code></pre>
+
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/vr-contour-planes.jpg" alt="Spanwise pressure and velocity contour planes arranged along the wing in VR">
+          <figcaption>Spanwise pressure and velocity planes in VR at both angles of attack</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-ui-menu.jpg" alt="VR controllers interacting with the world-space UI menu">
+          <figcaption>World-space menus: animation controls, angle of attack and contour toggles</figcaption>
+        </figure>
+      </div>
+
+      <h3>Animated particle flow</h3>
+      <p>
+        Streamline data exported from CFD-Post as CSV (particle position, velocity, streamline ID and time on
+        streamline) drives a custom C# particle system. Particles spawn according to their time on the streamline,
+        so the flow develops naturally: particles race through the suction peak and linger in the separated region.
+        The recirculation near the tip at 6.06&deg; is hard to see in static plots but obvious in VR.
+      </p>
+      <ul>
+        <li><strong>Object pooling:</strong> a fixed pool of reusable particles avoids constantly creating and destroying objects, keeping frame rates up.</li>
+        <li><strong>Velocity colour map:</strong> blue (slow) to red (fast), generated in code.</li>
+        <li><strong>Plug-and-play data:</strong> both angles of attack run on the same script; you just swap in a CSV file.</li>
+        <li><strong>Controls:</strong> play, pause, restart and slow-motion playback of the 0.113&nbsp;s flow-through time.</li>
+      </ul>
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/vr-animation-frames.jpg" alt="Time-resolved snapshots of the particle flow animation over the wing">
+          <figcaption>Time-resolved animation frames at 6.06&deg;</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-ui-controls.jpg" alt="Particle velocity field with play, pause and restart controls and a velocity legend">
+          <figcaption>Particle field with playback controls and velocity legend</figcaption>
+        </figure>
+      </div>
+
+      <h3>Velocity probe and single streamlines</h3>
+      <p>
+        Pointing the left controller at any particle shows its instantaneous velocity above the controller,
+        so users can test predictions directly, for example by measuring the drop across the shock: 454&nbsp;m/s at the
+        suction peak, 186&nbsp;m/s pre-shock and 20.7&nbsp;m/s post-shock. Individual streamlines can also be isolated and
+        animated to follow one fluid element through the recirculation region.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/vr-velocity-probe.jpg" alt="Velocity probe readings at the suction peak, before and after the shock">
+          <figcaption>Velocity probe: suction peak, pre-shock and post-shock</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-single-streamline.jpg" alt="An isolated streamline path swirling through the recirculation region">
+          <figcaption>Isolated streamline (ID 255, 275 particles) in the recirculation zone</figcaption>
+        </figure>
+      </div>
+
+      <h2>VR vs. traditional post-processing</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspect</th><th>Traditional (ParaView)</th><th>VR environment</th></tr></thead>
+          <tbody>
+            <tr><td>Ease of use</td><td>Steep learning curve, menu-driven</td><td>Intuitive: walk, grab and point</td></tr>
+            <tr><td>Spatial understanding</td><td>Limited to a 2D screen</td><td>Natural depth perception, full 6 degrees of freedom</td></tr>
+            <tr><td>Engagement</td><td>Passive, focused on data extraction</td><td>Active, hands-on exploration</td></tr>
+            <tr><td>Tool range</td><td>Extensive built-in filters</td><td>Focused, custom-built features</td></tr>
+            <tr><td>Setup time</td><td>Low</td><td>High: scripting, UI design and testing</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        VR isn't a replacement for full post-processing software, but it works well as a complementary teaching
+        and communication tool, for lectures, open days and outreach.
+      </p>
+
+      <h2>Challenges &amp; limitations</h2>
+      <ul>
+        <li><strong>Performance:</strong> tens of thousands of particle objects brought the scene to about 42&nbsp;FPS, below the Quest 2's 72&nbsp;Hz target, with occasional drops that risk motion sickness. Object pooling reduced the problem but didn't eliminate it.</li>
+        <li><strong>Data quality:</strong> some exported streamlines had too few points or sudden coordinate jumps, which only became visible once they were isolated in VR.</li>
+        <li><strong>Post-processing only:</strong> results must be solved and exported first, so users can't change boundary conditions live.</li>
+        <li><strong>Turbulence model:</strong> Spalart&ndash;Allmaras limits accuracy once the flow separates at 6.06&deg;.</li>
+      </ul>
+
+      <h2>What I learned &amp; next steps</h2>
+      <ul>
+        <li>The hardest part wasn't the CFD or the VR, but getting data between them. Choosing the right formats (EnSight &rarr; X3D &rarr; FBX, plus CSV for particles) made the project possible.</li>
+        <li>Validating the CFD before visualising it mattered. An immersive view of a wrong answer is still a wrong answer.</li>
+        <li>Planning had to stay flexible. Meshing and export problems took longer than expected, so I reworked the timeline and focused on the most valuable VR features.</li>
+        <li><strong>Next steps:</strong> link the environment to a real-time solver or reduced-order model so users can change the angle of attack live, extend it to other cases (turbine blades, arteries, urban flows), and run formal usability studies with students using the System Usability Scale and NASA-TLX.</li>
+      </ul>
+
+      <p style="margin-top:48px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

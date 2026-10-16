@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brick Flyer: VTOL Quadplane UAS | Ben Altangerel</title>
+  <meta name="description" content="Project Manager of a six-person team that designed, built, certified and flew a VTOL quadplane UAS, 19% under budget and two weeks ahead of the testing milestone.">
+  <meta property="og:title" content="Brick Flyer: VTOL Quadplane UAS | Ben Altangerel">
+  <meta property="og:description" content="Led a six-person team to design, build, certify and fly a VTOL quadplane drone, £153 under budget.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">AER304 Aerospace Design III &middot; University of Sheffield &middot; 2023&ndash;24</p>
+        <h1>Brick Flyer: VTOL Quadplane UAS</h1>
+        <p class="summary">
+          I was <strong>Project Manager</strong> of a six-person team that designed, built, certified and flew a drone that takes off
+          like a quadcopter, flies like a plane and lands itself. It was built for a simulated industry tender for a search-and-location aircraft.
+        </p>
+
+        <img class="cover" src="../images/brick-flyer/flying.jpg" style="object-position: center 22%" alt="Brick Flyer in fixed-wing flight on flight day">
+
+        <div class="results">
+          <div><strong>19% under</strong><span>budget: £647 spent of £800</span></div>
+          <div><strong>2 weeks early</strong><span>to the testing gate (week 6 vs. week 8)</span></div>
+          <div><strong>50 m &middot; 18 m/s</strong><span>peak altitude and ground speed on flight day</span></div>
+          <div><strong>1st to launch</strong><span>on flight day, set up in about 8 minutes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>My role</h2>
+      <!-- TODO (Ben): check these match what you personally did -->
+      <ul>
+        <li><strong>Led the team</strong> of six discipline leads (structures, flight dynamics, avionics, ground systems, integration), and owned the project plan and milestones.</li>
+        <li><strong>Reported to the client</strong> every fortnight with "5-box" status updates covering progress, risks, cost and issues.</li>
+        <li><strong>Owned the budget</strong> and the final financial review, and was responsible for all formal documents, including the safety case that earned our Flight Test Certificate.</li>
+        <li><strong>Turned around a poor start:</strong> after weak early documents, I introduced weekly meetings with a set purpose and a rebuilt plan. From then on we stayed on schedule.</li>
+      </ul>
+
+      <h3>The planning documents</h3>
+      <p class="hint">Real excerpts from the project. Click to enlarge.</p>
+      <div class="gallery docs">
+        <figure>
+          <img src="../images/brick-flyer/pm-project-plan.jpg" alt="Excerpt of the project plan: work breakdown with team, owner, priority and week-by-week schedule of activities, deliverables and milestones">
+          <figcaption><strong>Project plan:</strong> every task with an owner, a priority and a week-by-week schedule of activities, deliverables and milestones</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/brick-flyer/pm-5box.jpg" alt="Week 8 five-box status report: milestones against baseline, risk register with mitigations, issues with owners, budget and completed and planned activity">
+          <figcaption><strong>Fortnightly 5-box report:</strong> milestones against baseline, risks and mitigations, issues with owners, and budget, all on one page</figcaption>
+        </figure>
+      </div>
+
+      <h2>The aircraft</h2>
+      <p class="specs">1.4&nbsp;m wingspan &middot; 2.1&nbsp;kg &middot; 4 VTOL motors + 1 puller motor &middot; CFRP frame, foamboard wings &middot; ArduPilot autopilot</p>
+      <div class="gallery quad">
+        <figure>
+          <img src="../images/brick-flyer/render-iso.jpg" alt="CAD render of the Brick Flyer quadplane">
+          <figcaption>CAD design</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/brick-flyer/iron-bird.jpg" alt="The iron bird avionics test rig">
+          <figcaption>Iron bird test rig</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/brick-flyer/built-top.jpg" alt="The finished aircraft from above">
+          <figcaption>Finished aircraft</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/brick-flyer/internals.jpg" alt="Inside the central wing: plywood core, ESCs and wiring">
+          <figcaption>Internals and wiring</figcaption>
+        </figure>
+      </div>
+
+      <h2>Key decisions</h2>
+      <ul>
+        <li><strong>Test rig before airframe:</strong> the "iron bird" let us sort out the avionics early, and it caught a propeller clash that would have destroyed the aircraft in flight.</li>
+        <li><strong>Analysis-led structure:</strong> FEA showed CFRP gave the lowest displacement for its weight, so we used it for the frame. The wing peaked at 1.42&nbsp;MPa under a 3&times; overload, against foamboard's 28&nbsp;MPa strength.</li>
+        <li><strong>Test early, fix early:</strong> reaching the drone nets two weeks early exposed underpowered props in time to upgrade from 5&Prime; to 6&Prime;.</li>
+        <li><strong>Designed for speed:</strong> quick-release spar-and-dowel wings got us flight-ready in about 8 minutes, against a 10-minute requirement.</li>
+      </ul>
+
+      <h2>Flight day: crash, diagnosis, recovery</h2>
+      <p>
+        The first forward flight crashed after a mode change. By lining up the onboard video with the flight logs, we found the cause:
+        <strong>Loiter was selected instead of RTL</strong>, and the automatic bank pushed the airspeed past the VTOL-assist limit,
+        so the lift motors cut out and the aircraft stalled. We <strong>repaired it on site and flew again the same day</strong>,
+        and it was our best flight of the project.
+      </p>
+      <figure class="diagram">
+        <img src="../images/brick-flyer/flight1-log.jpg" alt="Annotated flight 1 log showing the incorrect mode change, VTOL motor shut-off, overshoot and stall">
+        <figcaption>Flight 1 log, annotated: wrong mode change &rarr; VTOL motors off &rarr; pitch-up &rarr; stall and dive</figcaption>
+      </figure>
+
+      <h2>Delivery against plan</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Milestone</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Manufacture gate</td><td>1 week early</td></tr>
+            <tr><td>Testing gate</td><td>About 2 weeks early</td></tr>
+            <tr><td>Flight Test Certificate</td><td>5 days late (parameter errors), recovered before flight day</td></tr>
+            <tr><td>Flight day, poster to Industrial Advisory Board, technical report</td><td>All on time</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        We met the requirements for propulsion, flight modes, transport box, set-up time and safety. We missed two: mass was 2.1&nbsp;kg against a 2&nbsp;kg limit,
+        and flight time was about 5 minutes against a 10-minute target. Both are the first targets for a next iteration.
+      </p>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li>Set up structure from day one: regular meetings with a clear purpose, and a plan the whole team believes in.</li>
+        <li>Build time for prototypes and testing into the plan. Problems found early are cheap to fix.</li>
+        <li>Check the small things and label the switches. A wrong parameter delayed certification, and an unlabelled switch caused our crash.</li>
+      </ul>
+
+      <div class="cta-box">
+        <div>
+          <strong>Want the detail?</strong>
+          <span>The full write-up covers the CAD and FEA, build, safety case, flight logs, cost analysis, lessons-learnt log and final poster.</span>
+        </div>
+        <a href="brick-flyer-vtol-uas-full.html" class="btn">Read the full write-up &rarr;</a>
+      </div>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

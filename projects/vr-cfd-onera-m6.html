@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulating Flows Through VR: ONERA M6 CFD | Ben Altangerel</title>
+  <meta name="description" content="MEng dissertation: transonic CFD of the ONERA M6 wing in ANSYS Fluent, validated to within 1.2% of wind tunnel lift, and explored in an interactive VR environment built in Unity.">
+  <meta property="og:title" content="Understanding and Simulating Flows Through VR | Ben Altangerel">
+  <meta property="og:description" content="Transonic CFD of the ONERA M6 wing, validated against wind tunnel data and explored in an interactive VR environment I built in Unity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">MEng Dissertation &middot; University of Sheffield &middot; 2025</p>
+        <h1>Understanding and Simulating Flows Through VR</h1>
+        <p class="summary">
+          I simulated transonic airflow over the ONERA M6 wing in ANSYS Fluent, <strong>validated it against wind tunnel data</strong>,
+          and built an <strong>interactive VR environment</strong> in Unity and C# for walking around the flow, watching it move and
+          measuring it with a controller.
+        </p>
+
+        <img class="cover" src="../images/vr-cfd/vr-particle-flow.jpg" alt="Animated particle velocity field over the ONERA M6 wing inside the Unity VR environment">
+
+        <div class="results">
+          <div><strong>1.2%</strong><span>lift error against wind tunnel data at &alpha; = 3.06&deg;</span></div>
+          <div><strong>3.48M cells</strong><span>final mesh, chosen from a 4-level convergence study</span></div>
+          <div><strong>7 sections</strong><span>of pressure data validated from wing root to tip</span></div>
+          <div><strong>End-to-end</strong><span>CFD-to-VR pipeline across 5 tools, built from scratch</span></div>
+        </div>
+        <p class="specs">ANSYS Fluent &middot; Meshing &amp; y<sup>+</sup> &middot; Spalart&ndash;Allmaras RANS &middot; ParaView &middot; Blender &middot; Unity &middot; C# &middot; Meta Quest 2</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>1. CFD setup</h2>
+      <ul>
+        <li><strong>Benchmark case:</strong> the ONERA M6 wing at Mach 0.84 and Re = 11.72&times;10<sup>6</sup>, at 3.06&deg; (attached flow) and 6.06&deg; (shock-induced separation).</li>
+        <li><strong>Mesh designed from first principles:</strong> I calculated the first inflation layer height (4.64&times;10<sup>&minus;5</sup>&nbsp;m for y<sup>+</sup> &asymp; 30) from Sutherland's law, the Reynolds number and a skin-friction estimate, with local refinement at the wing and wake.</li>
+        <li><strong>Solver:</strong> pressure-based steady RANS with the Spalart&ndash;Allmaras turbulence model.</li>
+      </ul>
+      <div class="gallery">
+        <figure>
+          <img src="../images/vr-cfd/cfd-surface-mesh.jpg" alt="Refined surface mesh on the ONERA M6 wing">
+          <figcaption>Refined surface mesh</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cfd-inflation-layers.jpg" alt="Inflation layers along the aerofoil edge">
+          <figcaption>Inflation layers sized for y<sup>+</sup> &asymp; 30</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/mach-contours.jpg" alt="Mach number contours showing the shock on the upper surface">
+          <figcaption>Mach contours showing the shockwave</figcaption>
+        </figure>
+      </div>
+
+      <h2>2. Validation</h2>
+      <p>
+        A four-level mesh study showed the results had converged: going from the fine to the ultra-fine mesh changed lift by under 0.5%.
+        At 3.06&deg;, lift came within <strong>1.2%</strong> of the wind tunnel value. At 6.06&deg;, I traced the larger error (9.6% on lift, with drag over-predicted)
+        to the turbulence model's known weakness with separated flow, where the pressure data diverges beyond about 65% span.
+      </p>
+
+      <figure class="viz">
+        <div class="viz-legend" aria-hidden="true">
+          <span><i class="key s1"></i>&alpha; = 3.06&deg;</span>
+          <span><i class="key s2"></i>&alpha; = 6.06&deg;</span>
+          <span><i class="key solid"></i>CFD</span>
+          <span><i class="key dashed"></i>Experiment</span>
+        </div>
+        <div class="viz-panels">
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="cl-title">
+            <title id="cl-title">Lift coefficient against mesh refinement: CFD converges towards the experimental value at 3.06 degrees and to within 10 percent at 6.06 degrees</title>
+            <text class="viz-title" x="0" y="16">Lift coefficient, C<tspan baseline-shift="sub" font-size="10">L</tspan></text>
+            <g class="viz-grid">
+              <line x1="60" x2="440" y1="213.75" y2="213.75"/><line x1="60" x2="440" y1="161.25" y2="161.25"/>
+              <line x1="60" x2="440" y1="108.75" y2="108.75"/><line x1="60" x2="440" y1="56.25" y2="56.25"/>
+            </g>
+            <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+            <g class="viz-tick" text-anchor="end">
+              <text x="52" y="217.75">0.2</text><text x="52" y="165.25">0.3</text>
+              <text x="52" y="112.75">0.4</text><text x="52" y="60.25">0.5</text>
+            </g>
+            <g class="viz-tick" text-anchor="middle">
+              <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+              <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+              <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+              <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+            </g>
+            <line class="ref s1" x1="90" x2="440" y1="179.6" y2="179.6"/>
+            <line class="ref s2" x1="90" x2="440" y1="40.5" y2="40.5"/>
+            <polyline class="series s1" points="90,219.8 207,185.5 323,181.2 440,181.0"/>
+            <polyline class="series s2" points="90,89.9 207,85.9 323,67.1 440,66.0"/>
+            <g class="pt s1"><circle cx="90" cy="219.8" r="4"/><circle cx="207" cy="185.5" r="4"/><circle cx="323" cy="181.2" r="4"/><circle cx="440" cy="181.0" r="4"/></g>
+            <g class="pt s2"><circle cx="90" cy="89.9" r="4"/><circle cx="207" cy="85.9" r="4"/><circle cx="323" cy="67.1" r="4"/><circle cx="440" cy="66.0" r="4"/></g>
+            <g class="hit">
+              <circle cx="90" cy="219.8" r="12"><title>Coarse (0.89M cells), α = 3.06°: CL = 0.1885</title></circle>
+              <circle cx="207" cy="185.5" r="12"><title>Medium (2.10M cells), α = 3.06°: CL = 0.2538</title></circle>
+              <circle cx="323" cy="181.2" r="12"><title>Fine (3.48M cells), α = 3.06°: CL = 0.2619 (experiment 0.265)</title></circle>
+              <circle cx="440" cy="181.0" r="12"><title>Ultra-fine (7.35M cells), α = 3.06°: CL = 0.2623</title></circle>
+              <circle cx="90" cy="89.9" r="12"><title>Coarse (0.89M cells), α = 6.06°: CL = 0.4359</title></circle>
+              <circle cx="207" cy="85.9" r="12"><title>Medium (2.10M cells), α = 6.06°: CL = 0.4436</title></circle>
+              <circle cx="323" cy="67.1" r="12"><title>Fine (3.48M cells), α = 6.06°: CL = 0.4793 (experiment 0.530)</title></circle>
+              <circle cx="440" cy="66.0" r="12"><title>Ultra-fine (7.35M cells), α = 6.06°: CL = 0.4814</title></circle>
+            </g>
+            <g class="viz-label"><text x="452" y="185">3.06°</text><text x="452" y="70">6.06°</text></g>
+          </svg>
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="cd-title">
+            <title id="cd-title">Drag coefficient against mesh refinement: close to experiment at 3.06 degrees, over-predicted at 6.06 degrees where the flow separates</title>
+            <text class="viz-title" x="0" y="16">Drag coefficient, C<tspan baseline-shift="sub" font-size="10">D</tspan></text>
+            <g class="viz-grid">
+              <line x1="60" x2="440" y1="170" y2="170"/><line x1="60" x2="440" y1="100" y2="100"/><line x1="60" x2="440" y1="30" y2="30"/>
+            </g>
+            <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+            <g class="viz-tick" text-anchor="end">
+              <text x="52" y="244">0</text><text x="52" y="174">0.02</text><text x="52" y="104">0.04</text><text x="52" y="34">0.06</text>
+            </g>
+            <g class="viz-tick" text-anchor="middle">
+              <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+              <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+              <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+              <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+            </g>
+            <line class="ref s1" x1="90" x2="440" y1="184" y2="184"/>
+            <line class="ref s2" x1="90" x2="440" y1="149" y2="149"/>
+            <polyline class="series s1" points="90,169.8 207,180.6 323,179.8 440,180.6"/>
+            <polyline class="series s2" points="90,47.7 207,43.9 323,67.8 440,71.0"/>
+            <g class="pt s1"><circle cx="90" cy="169.8" r="4"/><circle cx="207" cy="180.6" r="4"/><circle cx="323" cy="179.8" r="4"/><circle cx="440" cy="180.6" r="4"/></g>
+            <g class="pt s2"><circle cx="90" cy="47.7" r="4"/><circle cx="207" cy="43.9" r="4"/><circle cx="323" cy="67.8" r="4"/><circle cx="440" cy="71.0" r="4"/></g>
+            <g class="hit">
+              <circle cx="90" cy="169.8" r="12"><title>Coarse (0.89M cells), α = 3.06°: CD = 0.0201</title></circle>
+              <circle cx="207" cy="180.6" r="12"><title>Medium (2.10M cells), α = 3.06°: CD = 0.0170</title></circle>
+              <circle cx="323" cy="179.8" r="12"><title>Fine (3.48M cells), α = 3.06°: CD = 0.0172 (experiment 0.016)</title></circle>
+              <circle cx="440" cy="180.6" r="12"><title>Ultra-fine (7.35M cells), α = 3.06°: CD = 0.0170</title></circle>
+              <circle cx="90" cy="47.7" r="12"><title>Coarse (0.89M cells), α = 6.06°: CD = 0.0549</title></circle>
+              <circle cx="207" cy="43.9" r="12"><title>Medium (2.10M cells), α = 6.06°: CD = 0.0560</title></circle>
+              <circle cx="323" cy="67.8" r="12"><title>Fine (3.48M cells), α = 6.06°: CD = 0.0492 (experiment 0.026)</title></circle>
+              <circle cx="440" cy="71.0" r="12"><title>Ultra-fine (7.35M cells), α = 6.06°: CD = 0.0483</title></circle>
+            </g>
+            <g class="viz-label"><text x="452" y="186">3.06°</text><text x="452" y="75">6.06°</text></g>
+          </svg>
+        </div>
+        <figcaption>Mesh convergence study. Solid lines are CFD and dashed lines are wind tunnel values. Hover over a point to see its value.</figcaption>
+      </figure>
+
+      <div class="gallery two">
+        <figure>
+          <img src="../images/vr-cfd/cp-3deg-eta044.png" alt="Pressure coefficient at 44 percent span, 3.06 degrees: CFD matches experiment">
+          <figcaption>Attached flow (3.06&deg;): CFD (red) matches the wind tunnel data (blue)</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/cp-6deg-eta090.png" alt="Pressure coefficient at 90 percent span, 6.06 degrees: separated flow, CFD diverges">
+          <figcaption>Separated flow (6.06&deg;): where the turbulence model reaches its limit</figcaption>
+        </figure>
+      </div>
+
+      <h2>3. VR environment</h2>
+      <p>I built the environment in Unity with the XR Interaction Toolkit, writing the data handling and interaction systems in C#:</p>
+      <ul>
+        <li><strong>Data pipeline:</strong> Fluent &rarr; ParaView &rarr; Blender &rarr; Unity, plus a custom shader so the VR colours exactly match the CFD data.</li>
+        <li><strong>Grabbable contour planes:</strong> slide pressure and velocity slices from wing root to tip by hand.</li>
+        <li><strong>Animated particle flow:</strong> a pooled C# particle system plays the flow in real time, so separation and recirculation are obvious.</li>
+        <li><strong>Velocity probe:</strong> point at any particle to read its speed, for example 454&nbsp;m/s at the suction peak and 20.7&nbsp;m/s behind the shock.</li>
+      </ul>
+      <div class="gallery quad">
+        <figure>
+          <img src="../images/vr-cfd/vr-contour-planes.jpg" alt="Spanwise pressure and velocity contour planes in VR">
+          <figcaption>Contour planes in VR</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-animation-frames.jpg" alt="Time-resolved frames of the particle flow animation">
+          <figcaption>Animated particle flow</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-ui-controls.jpg" alt="Particle field with play, pause and restart controls">
+          <figcaption>In-world playback controls</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/vr-cfd/vr-single-streamline.jpg" alt="Isolated streamline in the recirculation zone with a velocity probe reading">
+          <figcaption>Isolated streamline and velocity probe</figcaption>
+        </figure>
+      </div>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Validate before you present.</strong> A convincing picture of a wrong answer is still a wrong answer, so the CFD was checked against experiment before it went anywhere near VR.</li>
+        <li><strong>Plan the data flow early.</strong> Getting data between tools took much of the first half of the project. Settling the file formats up front would have saved a lot of time.</li>
+        <li><strong>Set a performance target from day one.</strong> The particle scene ran at about 42&nbsp;FPS against the headset's 72&nbsp;Hz, which I'd design around from the start next time.</li>
+        <li><strong>Test with real users.</strong> The next step would be formal usability studies with students, to measure the learning benefit.</li>
+      </ul>
+
+      <div class="cta-box">
+        <div>
+          <strong>Want the detail?</strong>
+          <span>The full write-up covers the meshing calculations, every validation plot, the flow features, the shader code, the comparison with ParaView, and the limitations.</span>
+        </div>
+        <a href="vr-cfd-onera-m6-full.html" class="btn">Read the full write-up &rarr;</a>
+      </div>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

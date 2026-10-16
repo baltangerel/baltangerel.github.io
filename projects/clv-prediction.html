@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Lifetime Value Prediction | Ben Altangerel</title>
+  <meta name="description" content="Five machine learning models compared for predicting customer lifetime value for 9,134 insurance customers, with Random Forest reaching R² 0.71 in 5-fold cross-validation.">
+  <meta property="og:title" content="Customer Lifetime Value Prediction | Ben Altangerel">
+  <meta property="og:description" content="Machine learning in Python: predicting customer lifetime value with five models, from a linear baseline to a stacked ensemble.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">Personal project &middot; Python &middot; Machine learning &middot; 2026</p>
+        <h1>Predicting Customer Lifetime Value with Machine Learning</h1>
+        <p class="summary">
+          Customer lifetime value (CLV) is how much a customer is worth to a business over the whole relationship, and it drives decisions on
+          marketing, pricing and retention. I built and compared <strong>five machine learning models</strong> to predict CLV for
+          <strong>9,134 insurance customers</strong>, from a linear baseline up to a stacked ensemble.
+        </p>
+
+        <img class="cover" src="../images/clv/model-comparison.png" style="object-fit: contain; background: #fff; max-height: 520px" alt="Five-fold cross-validation error and R squared for the five models">
+
+        <div class="results">
+          <div><strong>R&sup2; 0.71</strong><span>best 5-fold cross-validated score (Random Forest)</span></div>
+          <div><strong>4.4&times;</strong><span>the explained variance of the linear baseline (R&sup2; 0.16)</span></div>
+          <div><strong>5 models</strong><span>Lasso, Random Forest, LightGBM, XGBoost and a stacked ensemble</span></div>
+          <div><strong>74%</strong><span>of the model's importance from just two features</span></div>
+        </div>
+        <p class="specs">Python &middot; scikit-learn &middot; XGBoost &middot; LightGBM &middot; pandas &middot; Cross-validation</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>How it works</h2>
+      <ul>
+        <li><strong>Data:</strong> a public dataset of 9,134 insurance customers, with policy details, premiums, claims, income and demographics. Categorical fields were encoded into 32 model inputs.</li>
+        <li><strong>Models:</strong> a Lasso linear baseline, three tree-based models (Random Forest, LightGBM, XGBoost), and a stacked ensemble that combines all three.</li>
+        <li><strong>Fair evaluation:</strong> an 80/20 split plus 5-fold cross-validation, with every preprocessing step learned from the training rows only, so test data never influences the model.</li>      </ul>
+
+      <h2>Results</h2>
+      <p>
+        The tree-based models were far stronger than the linear baseline, because CLV depends on features in non-linear ways. The
+        <strong>Random Forest scored R&sup2;&nbsp;=&nbsp;0.71</strong> across five folds. The stacked ensemble scored 0.709, effectively the same, so I
+        chose the Random Forest: just as accurate, simpler, and about a tenth of the training time.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>5-fold R&sup2;</th><th>5-fold RMSE</th></tr></thead>
+          <tbody>
+            <tr><td>Lasso (linear baseline)</td><td>0.161 &plusmn; 0.008</td><td>6,286</td></tr>
+            <tr><td><strong>Random Forest (chosen)</strong></td><td><strong>0.708 &plusmn; 0.015</strong></td><td><strong>3,707</strong></td></tr>
+            <tr><td>LightGBM</td><td>0.693 &plusmn; 0.013</td><td>3,805</td></tr>
+            <tr><td>XGBoost</td><td>0.684 &plusmn; 0.009</td><td>3,861</td></tr>
+            <tr><td>Stacked ensemble</td><td>0.709 &plusmn; 0.014</td><td>3,701</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="diagram">
+        <img src="../images/clv/rf-pred-vs-actual.png" alt="Random Forest predicted against actual CLV for training and test customers">
+        <figcaption>Random Forest, predicted vs. actual CLV: training data (left, R&sup2; 0.88) and unseen test data (right, R&sup2; 0.69). Most customers sit close to the line, and the model underestimates the rare very high-value customers.</figcaption>
+      </figure>
+      <div class="gallery docs">
+        <figure>
+          <img src="../images/clv/rf-feature-importance.png" alt="Random Forest feature importance, led by number of policies and monthly premium">
+          <figcaption>What drives CLV: number of policies (48%) and monthly premium (26%) dominate</figcaption>
+        </figure>
+        <figure class="callout-fig">
+          <div class="callout">
+            <strong>An evaluation trap I avoided</strong>
+            <p>
+              It's tempting to remove "outliers" before splitting the data. Here, the outliers are the highest-value customers, the hardest and most important to
+              predict. Removing them first also strips them from the test set, which inflates the score (R&sup2; 0.78 rather than 0.66 on a realistic
+              test set) without the model getting any better. I kept every customer in the test data.
+            </p>
+          </div>
+        </figure>
+      </div>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Start with a simple baseline.</strong> The linear model's R&sup2; of 0.16 shows how much the tree models actually add.</li>
+        <li><strong>Prefer the simpler model when scores tie.</strong> The ensemble added complexity and training time, not accuracy.</li>
+        <li><strong>Keep the test set realistic.</strong> Removing hard cases from the test data makes a model look better without making it better.</li>
+      </ul>
+      <p><strong>Next steps:</strong> a log-transformed target or a business-weighted metric, so the model handles the long tail of high-value customers better.</p>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

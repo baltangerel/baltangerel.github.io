@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    PRINT VERSION OF THE PORTFOLIO
+    This page is turned into Ben-Altangerel-Portfolio.pdf by build-pdf.ps1.
+    After editing it, run:  powershell -ExecutionPolicy Bypass -File build-pdf.ps1
+  -->
+  <title>Ben Altangerel | Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+  <!-- ========== PAGE 1: COVER ========== -->
+  <section class="sheet pdf-cover">
+    <div class="banner">
+      <span class="role">Masters of Aerospace Engineering Graduate</span>
+      <h1>Ben <span class="highlight">Altangerel</span></h1>
+      <p class="sub">MEng Aerospace Engineering &middot; University of Sheffield</p>
+    </div>
+    <div class="body">
+      <p class="pitch">
+        Aerospace engineering graduate with hands-on experience in CFD, simulation validation and building
+        software tools around engineering data. I enjoy taking ideas from concept through analysis to something
+        people can use, and I'm looking for a graduate role in aerospace engineering.
+      </p>
+      <ul class="contact-list">
+        <li><span>Email</span><a href="mailto:bayasal@hotmail.co.uk">bayasal@hotmail.co.uk</a></li>
+        <li><span>LinkedIn</span><a href="https://linkedin.com/in/bayasalaltangerel">linkedin.com/in/bayasalaltangerel</a></li>
+        <li class="site-link" hidden><span>Website (interactive version)</span><a class="site-url" href="#"></a></li>
+      </ul>
+      <div class="featured">
+        <img src="images/vr-cfd/vr-particle-flow.jpg" alt="Particle flow over the ONERA M6 wing in VR">
+        <div>
+          <p class="label">Featured project &middot; MEng dissertation</p>
+          <h3>Understanding and Simulating Flows Through VR</h3>
+          <p>Transonic CFD of the ONERA M6 wing in ANSYS Fluent, validated against wind tunnel data and explored in an interactive VR environment built in Unity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 2: ABOUT & SKILLS ========== -->
+  <section class="sheet">
+    <h2>About me</h2>
+    <p>
+      I'm an aerospace engineer with an MEng in Aerospace Engineering from the University of Sheffield.
+      I enjoy the full design cycle: sketching an idea, modelling it in CAD, analysing it, and then making and
+      testing a real prototype.
+    </p>
+    <p>
+      Alongside design and analysis I write software to automate calculations, process data and visualise results.
+      My dissertation combined both: I built a validated CFD model of a transonic wing and a virtual reality tool,
+      written in C#, for exploring the results.
+    </p>
+    <p>
+      Outside of work I follow the space and aviation industries closely, from new launch vehicles to sustainable
+      aircraft, and I enjoy flight simulation and building small engineering side projects. To stay active I go to the
+      gym regularly, run, and go hiking and climbing.
+    </p>
+
+    <h2 style="margin-top:18pt">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Aerodynamics &amp; CFD</h3>
+        <ul class="tags">
+          <li>ANSYS Fluent</li><li>Meshing &amp; y+ / inflation layers</li><li>RANS / Spalart&ndash;Allmaras</li>
+          <li>Mesh convergence studies</li><li>Validation vs. experiment</li><li>ParaView</li>
+          <li>ANSYS CFD-Post</li><li>Transonic aerodynamics</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Software &amp; VR</h3>
+        <ul class="tags">
+          <li>Unity</li><li>C#</li><li>VR / XR Interaction Toolkit</li><li>Blender</li>
+          <li>Python</li><li>NumPy / pandas</li><li>Matplotlib</li><li>MATLAB</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Mechanical &amp; Design</h3>
+        <ul class="tags">
+          <li>SolidWorks</li><li>Fusion 360</li><li>Technical drawings</li><li>GD&amp;T</li><li>FEA</li><li>3D printing</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Professional</h3>
+        <ul class="tags">
+          <li>Technical reports</li><li>Literature review</li><li>Presentations</li><li>Project planning</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 3: DISSERTATION OVERVIEW ========== -->
+  <section class="sheet">
+    <p class="eyebrow">MEng Dissertation &middot; University of Sheffield &middot; 2025</p>
+    <h2>Understanding and Simulating Flows Through VR</h2>
+    <p class="lead">
+      I simulated transonic airflow over the ONERA M6 wing in ANSYS Fluent, validated the results against wind tunnel
+      data, and built an interactive VR environment in Unity for exploring them: walking around the wing, sliding
+      through pressure planes, watching the flow animate and probing velocities with a controller.
+    </p>
+    <figure class="pdf-figure cover-shot">
+      <img src="images/vr-cfd/vr-particle-flow.jpg" alt="Animated particle velocity field over the ONERA M6 wing in VR">
+    </figure>
+    <dl class="facts">
+      <div><dt>Flow case</dt><dd>ONERA M6, Mach 0.84, Re 11.72&times;10<sup>6</sup></dd></div>
+      <div><dt>CFD tools</dt><dd>ANSYS Fluent, ParaView, CFD-Post</dd></div>
+      <div><dt>VR tools</dt><dd>Unity 6, C#, XR Toolkit, Meta Quest 2</dd></div>
+    </dl>
+    <div class="results">
+      <div><strong>1.2%</strong><span>Lift coefficient error vs. experiment at &alpha; = 3.06&deg;</span></div>
+      <div><strong>3.48M</strong><span>Cells in final mesh, from a 4-level convergence study</span></div>
+      <div><strong>7</strong><span>Spanwise sections validated against wind tunnel C<sub>p</sub></span></div>
+      <div><strong>100+</strong><span>Flow fields exported into the VR pipeline</span></div>
+    </div>
+    <h3>The problem</h3>
+    <p>
+      CFD results are usually viewed as 2D graphs and static contours in menu-heavy software, which makes 3D phenomena
+      like shockwaves and flow separation hard to picture. The project asked whether VR could make them intuitive,
+      using the ONERA M6 transonic benchmark, which produces a clear shockwave and shock-induced separation.
+    </p>
+    <h3>Pipeline: from solver to headset</h3>
+    <ol class="pipeline">
+      <li><strong>ANSYS Fluent</strong><span>Steady RANS, exported as EnSight Gold</span></li>
+      <li><strong>ParaView / CFD-Post</strong><span>Planes &amp; surfaces as X3D, streamlines as CSV</span></li>
+      <li><strong>Blender</strong><span>Vertex colours &rarr; FBX</span></li>
+      <li><strong>Unity 6</strong><span>Custom shader, C# particles, XR UI</span></li>
+      <li><strong>Meta Quest 2</strong><span>Quest Link / Air Link</span></li>
+    </ol>
+  </section>
+
+  <!-- ========== PAGE 4: CFD SETUP & MESH CONVERGENCE ========== -->
+  <section class="sheet">
+    <h2>CFD setup</h2>
+    <p>
+      I built a hemispherical domain ten root chords in diameter around the swept ONERA M6 wing, with a refined
+      <em>body of influence</em> over the wake and tip vortex. I used a tetrahedral mesh with local sizing down to 3.75&nbsp;mm at the root and tip.
+      To use Spalart&ndash;Allmaras wall functions I targeted <strong>y<sup>+</sup> &asymp; 30</strong>. Working from Sutherland's law,
+      the freestream conditions and a skin-friction estimate (u<sub>&tau;</sub> = 10.40&nbsp;m/s), I calculated a
+      <strong>first inflation layer height of 4.64&times;10<sup>&minus;5</sup>&nbsp;m</strong>. The pressure-based solver modelled
+      air as an ideal gas at Mach 0.84 for two test cases: &alpha; = 3.06&deg; (mostly attached flow) and 6.06&deg; (shock-induced separation).
+    </p>
+    <div class="pdf-grid">
+      <figure>
+        <img src="images/vr-cfd/cfd-surface-mesh.jpg" alt="Refined surface mesh on the wing">
+        <figcaption>Refined surface mesh on the wing</figcaption>
+      </figure>
+      <figure>
+        <img src="images/vr-cfd/cfd-inflation-layers.jpg" alt="Inflation layers along the aerofoil edge">
+        <figcaption>Inflation layers sized for y<sup>+</sup> &asymp; 30</figcaption>
+      </figure>
+    </div>
+
+    <h2 style="margin-top:14pt">Validation against experiment</h2>
+    <p>
+      In a four-level mesh study (0.89M to 7.35M cells), going from the fine to the ultra-fine mesh changed C<sub>L</sub> by less than 0.5%,
+      so I used the <strong>fine mesh (3.48M cells)</strong> for all results.
+    </p>
+    <figure class="viz">
+      <div class="viz-legend" aria-hidden="true">
+        <span><i class="key s1"></i>&alpha; = 3.06&deg;</span>
+        <span><i class="key s2"></i>&alpha; = 6.06&deg;</span>
+        <span><i class="key solid"></i>CFD</span>
+        <span><i class="key dashed"></i>Experiment</span>
+      </div>
+      <div class="viz-panels">
+        <svg viewBox="0 0 520 300" role="img" aria-label="Lift coefficient against mesh refinement">
+          <text class="viz-title" x="0" y="16">Lift coefficient, C<tspan baseline-shift="sub" font-size="10">L</tspan></text>
+          <g class="viz-grid">
+            <line x1="60" x2="440" y1="213.75" y2="213.75"/><line x1="60" x2="440" y1="161.25" y2="161.25"/>
+            <line x1="60" x2="440" y1="108.75" y2="108.75"/><line x1="60" x2="440" y1="56.25" y2="56.25"/>
+          </g>
+          <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+          <g class="viz-tick" text-anchor="end">
+            <text x="52" y="217.75">0.2</text><text x="52" y="165.25">0.3</text>
+            <text x="52" y="112.75">0.4</text><text x="52" y="60.25">0.5</text>
+          </g>
+          <g class="viz-tick" text-anchor="middle">
+            <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+            <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+            <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+            <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+          </g>
+          <line class="ref s1" x1="90" x2="440" y1="179.6" y2="179.6"/>
+          <line class="ref s2" x1="90" x2="440" y1="40.5" y2="40.5"/>
+          <polyline class="series s1" points="90,219.8 207,185.5 323,181.2 440,181.0"/>
+          <polyline class="series s2" points="90,89.9 207,85.9 323,67.1 440,66.0"/>
+          <g class="pt s1"><circle cx="90" cy="219.8" r="4"/><circle cx="207" cy="185.5" r="4"/><circle cx="323" cy="181.2" r="4"/><circle cx="440" cy="181.0" r="4"/></g>
+          <g class="pt s2"><circle cx="90" cy="89.9" r="4"/><circle cx="207" cy="85.9" r="4"/><circle cx="323" cy="67.1" r="4"/><circle cx="440" cy="66.0" r="4"/></g>
+          <g class="viz-label"><text x="452" y="185">3.06°</text><text x="452" y="70">6.06°</text></g>
+        </svg>
+        <svg viewBox="0 0 520 300" role="img" aria-label="Drag coefficient against mesh refinement">
+          <text class="viz-title" x="0" y="16">Drag coefficient, C<tspan baseline-shift="sub" font-size="10">D</tspan></text>
+          <g class="viz-grid">
+            <line x1="60" x2="440" y1="170" y2="170"/><line x1="60" x2="440" y1="100" y2="100"/><line x1="60" x2="440" y1="30" y2="30"/>
+          </g>
+          <line class="viz-axis" x1="60" x2="440" y1="240" y2="240"/>
+          <g class="viz-tick" text-anchor="end">
+            <text x="52" y="244">0</text><text x="52" y="174">0.02</text><text x="52" y="104">0.04</text><text x="52" y="34">0.06</text>
+          </g>
+          <g class="viz-tick" text-anchor="middle">
+            <text x="90" y="260">Coarse</text><text x="90" y="276">0.89M</text>
+            <text x="207" y="260">Medium</text><text x="207" y="276">2.10M</text>
+            <text x="323" y="260">Fine</text><text x="323" y="276">3.48M</text>
+            <text x="440" y="260">Ultra-fine</text><text x="440" y="276">7.35M</text>
+          </g>
+          <line class="ref s1" x1="90" x2="440" y1="184" y2="184"/>
+          <line class="ref s2" x1="90" x2="440" y1="149" y2="149"/>
+          <polyline class="series s1" points="90,169.8 207,180.6 323,179.8 440,180.6"/>
+          <polyline class="series s2" points="90,47.7 207,43.9 323,67.8 440,71.0"/>
+          <g class="pt s1"><circle cx="90" cy="169.8" r="4"/><circle cx="207" cy="180.6" r="4"/><circle cx="323" cy="179.8" r="4"/><circle cx="440" cy="180.6" r="4"/></g>
+          <g class="pt s2"><circle cx="90" cy="47.7" r="4"/><circle cx="207" cy="43.9" r="4"/><circle cx="323" cy="67.8" r="4"/><circle cx="440" cy="71.0" r="4"/></g>
+          <g class="viz-label"><text x="452" y="186">3.06°</text><text x="452" y="75">6.06°</text></g>
+        </svg>
+      </div>
+      <figcaption>Mesh convergence study. Solid lines are CFD; dashed lines are the experimental values (Schmitt &amp; Charpin, 1979).</figcaption>
+    </figure>
+  </section>
+
+  <!-- ========== PAGE 5: RESULTS ========== -->
+  <section class="sheet">
+    <h2>Results</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Angle of attack</th><th>C<sub>L</sub> CFD (fine)</th><th>C<sub>L</sub> experiment</th><th>C<sub>L</sub> error</th><th>C<sub>D</sub> CFD (fine)</th><th>C<sub>D</sub> experiment</th></tr></thead>
+        <tbody>
+          <tr><td>3.06&deg;</td><td>0.2619</td><td>0.265</td><td>1.2%</td><td>0.0172</td><td>0.016</td></tr>
+          <tr><td>6.06&deg;</td><td>0.4793</td><td>0.530</td><td>9.6%</td><td>0.0492</td><td>0.026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      At 3.06&deg; the simulation closely matches experiment. At 6.06&deg; it under-predicts lift and over-predicts drag,
+      a known limitation of the Spalart&ndash;Allmaras model with shock-induced separation. The pressure coefficient (C<sub>p</sub>)
+      distributions show the same pattern. They agree closely wherever the flow is attached, but diverge outboard of about 65% span at 6.06&deg;, where the flow separates.
+    </p>
+    <div class="pdf-grid square">
+      <figure>
+        <img src="images/vr-cfd/cp-3deg-eta044.png" alt="Pressure coefficient at 44 percent span, 3.06 degrees">
+        <figcaption>C<sub>p</sub> at &alpha; = 3.06&deg;, &eta; = 0.44: CFD (red) matches experiment (blue)</figcaption>
+      </figure>
+      <figure>
+        <img src="images/vr-cfd/cp-6deg-eta090.png" alt="Pressure coefficient at 90 percent span, 6.06 degrees">
+        <figcaption>C<sub>p</sub> at &alpha; = 6.06&deg;, &eta; = 0.90: separated flow, the model's limit</figcaption>
+      </figure>
+    </div>
+    <h3>Flow features</h3>
+    <p>
+      A strong leading-edge suction peak is followed by a <strong>shockwave</strong> at about 50&ndash;60% chord at the root,
+      moving forward towards the tip. At 6.06&deg; the shock strengthens and the flow begins to recirculate near the trailing edge.
+    </p>
+    <div class="pdf-grid compact">
+      <figure>
+        <img src="images/vr-cfd/pressure-contours.jpg" alt="Surface pressure contours at both angles of attack">
+        <figcaption>Surface pressure at 3.06&deg; (a, b) and 6.06&deg; (c, d)</figcaption>
+      </figure>
+      <figure>
+        <img src="images/vr-cfd/mach-contours.jpg" alt="Mach number contours showing the shock">
+        <figcaption>Mach number at 3.06&deg; (a) and 6.06&deg; (b), showing the shock</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 6: VR ENVIRONMENT ========== -->
+  <section class="sheet">
+    <h2>The VR environment</h2>
+    <p>
+      The environment runs in Unity 6 with the XR Interaction Toolkit. I wrote the data handling and interaction systems in C#.
+    </p>
+    <ul>
+      <li><strong>Grabbable contour planes:</strong> seven spanwise pressure and velocity planes that users slide from root to tip, rendered with a custom unlit vertex-colour shader so the colours match ParaView exactly.</li>
+      <li><strong>Animated particle flow:</strong> streamline data from CSV drives a pooled particle system coloured by velocity. Particles race through the suction peak and linger in the separated region, which is hard to see in static plots but obvious in VR.</li>
+      <li><strong>Velocity probe:</strong> point the controller at any particle to read its speed, for example 454&nbsp;m/s at the suction peak, 186&nbsp;m/s pre-shock and 20.7&nbsp;m/s post-shock.</li>
+      <li><strong>World-space menus:</strong> play, pause and restart the animation, switch angle of attack, and toggle contours.</li>
+    </ul>
+    <div class="pdf-grid">
+      <figure>
+        <img src="images/vr-cfd/vr-contour-planes.jpg" alt="Spanwise contour planes in VR">
+        <figcaption>Spanwise pressure and velocity planes in VR</figcaption>
+      </figure>
+      <figure>
+        <img src="images/vr-cfd/vr-single-streamline.jpg" alt="Isolated streamline in the recirculation zone and velocity probe">
+        <figcaption>Isolated streamline in the recirculation zone, with a velocity probe reading</figcaption>
+      </figure>
+    </div>
+    <h3>Limitations &amp; next steps</h3>
+    <ul>
+      <li><strong>Performance:</strong> tens of thousands of particle objects ran at about 42&nbsp;FPS, below the Quest 2's 72&nbsp;Hz target.</li>
+      <li><strong>Post-processing only:</strong> next steps would be linking the environment to a real-time solver or reduced-order model so users can change the angle of attack live.</li>
+      <li><strong>Evaluation:</strong> run formal usability studies with students (System Usability Scale, NASA-TLX) to measure the learning benefit.</li>
+    </ul>
+    <div class="pdf-footer-note">
+      <strong>Want to see more?</strong>
+      <span class="site-link" hidden>The full interactive write-up, with every figure, is at <a class="site-url" href="#"></a>.</span>
+      Contact me at <a href="mailto:bayasal@hotmail.co.uk">bayasal@hotmail.co.uk</a> or
+      <a href="https://linkedin.com/in/bayasalaltangerel">LinkedIn</a>.
+    </div>
+  </section>
+
+  <script>
+    // TODO: once the site is live, put its address here and re-run build-pdf.ps1,
+    // e.g. "https://benaltangerel.github.io". Left empty, the website lines are hidden.
+    const SITE_URL = "";
+
+    if (SITE_URL) {
+      document.querySelectorAll(".site-url").forEach((a) => {
+        a.href = SITE_URL;
+        a.textContent = SITE_URL.replace(/^https?:\/\//, "");
+      });
+      document.querySelectorAll(".site-link").forEach((el) => (el.hidden = false));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* ==========================================================
+   Print layout for portfolio-pdf.html (A4).
+   Loaded after style.css; forces light colours whatever the OS theme.
+   ========================================================== */
+
+@page { size: A4; margin: 14mm 14mm 16mm; }
+@page :first { margin: 0; }
+
+html:root {
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  --bg: #ffffff;
+  --bg-alt: #f5f7fa;
+  --card: #ffffff;
+  --text: #1a1d23;
+  --muted: #5b6472;
+  --border: #e3e7ed;
+  --shadow: none;
+  color-scheme: light;
+}
+html:root .viz { --series-1: #2a78d6; --series-2: #eb6834; --grid: #e1e0d9; --axis: #c3c2b7; --t1: #86b6ef; --t2: #3987e5; --t3: #1c5cab; --t4: #0d366b; }
+
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body { font-size: 10.5pt; line-height: 1.5; background: #fff; }
+.sheet { break-before: page; padding: 0; }
+.sheet:first-child { break-before: auto; }
+
+h1 { font-size: 24pt; margin-bottom: 6pt; }
+h2 { font-size: 15pt; margin: 0 0 8pt; }
+h3 { font-size: 11.5pt; margin: 12pt 0 4pt; }
+p { margin: 0 0 7pt; }
+ul { margin: 0 0 8pt; padding-left: 1.2em; }
+li { margin-bottom: 3pt; }
+section h2::after { margin-top: 6pt; height: 3px; width: 40px; }
+
+figure, table, .viz, .results, .pipeline, .facts, .skill-group, .pdf-grid > * { break-inside: avoid; }
+h2, h3 { break-after: avoid; }
+
+/* ---------- Cover (full-bleed first page) ---------- */
+.pdf-cover { height: 297mm; display: flex; flex-direction: column; }
+.pdf-cover .banner {
+  flex: 0 0 150mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 18mm 14mm;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 22, 0.35) 0%, rgba(8, 12, 22, 0.85) 100%),
+    url("../images/london-skyline-1920.jpg") center 40% / cover no-repeat,
+    #0b1020;
+}
+.pdf-cover .role {
+  align-self: flex-start;
+  font-size: 9pt;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4pt 10pt;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  margin-bottom: 10pt;
+}
+.pdf-cover h1 { font-size: 38pt; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4pt; color: #fff; }
+/* Solid colour: gradient text prints with a visible box in Chromium */
+.pdf-cover .highlight { color: #fb923c; }
+.pdf-cover .sub { font-size: 13pt; color: rgba(255, 255, 255, 0.88); margin: 0; }
+.pdf-cover .body { flex: 1; padding: 14mm 18mm 12mm; display: flex; flex-direction: column; gap: 10pt; }
+.pdf-cover .pitch { font-size: 12pt; color: var(--text); max-width: 150mm; }
+.contact-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6pt 16pt; }
+.contact-list li { margin: 0; }
+.contact-list span { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.contact-list a { font-weight: 600; }
+.featured {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 70mm 1fr;
+  gap: 12pt;
+  align-items: center;
+  padding: 10pt;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--sunset);
+  border-radius: 8pt;
+}
+.featured img { width: 100%; border-radius: 6pt; }
+.featured .label { font-size: 8pt; font-weight: 700; color: var(--sunset); text-transform: uppercase; letter-spacing: 0.06em; }
+.featured h3 { margin: 2pt 0 4pt; font-size: 12.5pt; }
+.featured p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+
+/* ---------- Shared print components ---------- */
+.eyebrow { font-size: 8.5pt; margin-bottom: 4pt; }
+.lead { font-size: 11pt; color: var(--muted); }
+.pdf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; margin: 8pt 0; }
+.pdf-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.pdf-grid figure, .pdf-figure { margin: 0; }
+.pdf-grid img, .pdf-figure img { width: 100%; border: 1px solid var(--border); border-radius: 6pt; display: block; }
+.pdf-grid.square img { height: 68mm; object-fit: contain; background: #fff; }
+.pdf-grid.compact img { width: auto; max-width: 100%; max-height: 68mm; }
+figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 3pt; }
+.pdf-figure { margin: 8pt 0; }
+.pdf-figure.cover-shot img { max-height: 78mm; object-fit: cover; }
+
+.facts { grid-template-columns: repeat(3, 1fr); gap: 6pt; margin: 8pt 0; }
+.facts div { padding: 6pt 8pt; border-radius: 6pt; }
+.facts dt { font-size: 7pt; }
+.facts dd { font-size: 9pt; }
+
+.results { grid-template-columns: repeat(4, 1fr); gap: 8pt; margin: 8pt 0; }
+.results div { padding: 8pt; }
+.results strong { font-size: 15pt; }
+.results span { font-size: 8pt; line-height: 1.35; display: block; }
+
+.pipeline { grid-template-columns: repeat(5, 1fr); gap: 6pt; margin: 8pt 0; }
+.pipeline li { padding: 7pt; }
+.pipeline strong { font-size: 9pt; }
+.pipeline span { font-size: 7.5pt; }
+
+.skills-grid { grid-template-columns: 1fr 1fr; gap: 10pt; }
+.skill-group { padding: 10pt; }
+.skill-group h3 { margin-top: 0; }
+.tags { gap: 4pt; }
+.tags li { font-size: 8pt; padding: 2pt 8pt; margin: 0; }
+
+.table-wrap { margin: 8pt 0; }
+.table-wrap table { font-size: 8.5pt; }
+.table-wrap th, .table-wrap td { padding: 5pt 7pt; }
+
+.viz { padding: 10pt; margin: 8pt 0; }
+.viz-legend { font-size: 8pt; }
+.viz figcaption { font-size: 8pt; }
+
+.about-photo { float: right; width: 38mm; aspect-ratio: 1; object-fit: cover; border-radius: 50%; margin: 0 0 8pt 12pt; }
+
+.pdf-footer-note {
+  margin-top: 12pt;
+  padding: 10pt 12pt;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8pt;
+  font-size: 10pt;
+}
+
+/* Hidden until a live website URL is set in portfolio-pdf.html */
+.site-link[hidden] { display: none !important; }
+
+/* On screen, preview the pages roughly as they will print */
+@media screen {
+  body { background: #e5e7eb; }
+  .sheet { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 14mm; background: #fff; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15); }
+  .sheet.pdf-cover { padding: 0; }
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premier League Match Predictor | Ben Altangerel</title>
+  <meta name="description" content="A Python machine learning model that predicts Premier League results from team form, matching the bookmakers' accuracy over a full unseen season.">
+  <meta property="og:title" content="Premier League Match Predictor | Ben Altangerel">
+  <meta property="og:description" content="Machine learning in Python: predicting Premier League results from form, benchmarked against the bookmakers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">Personal project &middot; Python &middot; Machine learning &middot; 2026</p>
+        <h1>Premier League Match Predictor</h1>
+        <p class="summary">
+          A machine learning model I built in Python that predicts Premier League results (home win, draw or away win) from each team's form
+          <strong>before</strong> kick-off. I tested it on a full season it had never seen, and it <strong>matched the bookmakers' accuracy</strong>.
+        </p>
+
+        <img class="cover" src="../images/pl-predictor/form-guide.png" style="max-height: 640px; object-position: top" alt="Weekly form guide: league table, last five results for each team and the model's win, draw and loss probabilities for the next match">
+
+        <div class="results">
+          <div><strong>49.5%</strong><span>accuracy over all 380 games of an unseen season, equal to the bookmakers</span></div>
+          <div><strong>1.044</strong><span>log loss, against 1.099 for guessing and 1.012 for the bookmakers</span></div>
+          <div><strong>1,900</strong><span>training matches, 25 engineered and leak-checked features</span></div>
+          <div><strong>Weekly</strong><span>live predictions, logged and scored against real results</span></div>
+        </div>
+        <p class="specs">Python &middot; pandas &middot; NumPy &middot; scikit-learn &middot; Matplotlib &middot; Feature engineering &middot; Model evaluation &middot; Git</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>How it works</h2>
+      <ul>
+        <li><strong>Data:</strong> seven seasons of match data (2020/21 to the current season), loaded, cleaned and sorted automatically.</li>
+        <li><strong>Feature engineering:</strong> each team's form over its previous 5 games (points, goals, shots on target, home and away form) plus season points per game. These are combined into 25 home, away and "home minus away" features.</li>
+        <li><strong>No peeking at the answer:</strong> two automated checks run every time to prove no match is predicted using its own result (data leakage). Newly promoted teams get cautious "below average" values, worked out from training data only.</li>
+        <li><strong>Models:</strong> logistic regression and a random forest, trained strictly in time order and scored on a full held-out season. They're compared against two baselines: "always pick the home team" and the bookmakers' odds.</li>
+      </ul>
+
+      <h2>Results</h2>
+      <p>
+        The best model, a random forest trained on five seasons, <strong>matched the bookmakers' 49.5% accuracy</strong> and beat both simple baselines.
+        Its probabilities (log loss) aren't quite as sharp as the bookmakers', which isn't surprising: their odds include team news and line-ups, while my model only sees form.
+      </p>
+      <figure class="diagram">
+        <img src="../images/pl-predictor/model-comparison.png" alt="Accuracy and log loss for each approach on all 380 test matches">
+        <figcaption>Every approach scored on the same 380 unseen matches</figcaption>
+      </figure>
+      <p>
+        I also tested whether more data really helps, using a bootstrap check (2,000 resamples). Five seasons gave logistic regression a real improvement
+        over one season. For the random forest, the difference was within the range of luck.
+      </p>
+      <div class="gallery docs">
+        <figure>
+          <img src="../images/pl-predictor/feature-importance.png" alt="Top 10 features by importance in the random forest">
+          <figcaption>The strongest signal is the gap in season points per game between the two teams</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/pl-predictor/calibration.png" alt="Calibration chart comparing predicted and actual home-win rates">
+          <figcaption>Calibration: when it says 60%, the home side wins about 60% of the time</figcaption>
+        </figure>
+      </div>
+
+      <h2>Live predictions</h2>
+      <p>
+        Each week the model is retrained on every completed match and predicts the next round. It produces a form guide and a preview card for every fixture,
+        and logs each prediction so its track record builds up against the real results and the bookmakers.
+      </p>
+      <figure class="diagram">
+        <img src="../images/pl-predictor/match-preview.png" alt="Match preview card for Arsenal v Leeds with win, draw and loss probabilities and both teams' form" style="max-width: 620px; margin: 0 auto; display: block">
+        <figcaption>One of the match preview cards</figcaption>
+      </figure>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Benchmark against something strong.</strong> Beating "always home win" is easy. The bookmakers are a far more honest measure.</li>
+        <li><strong>Guard against leakage first.</strong> A model that accidentally sees the answer looks brilliant and is useless. Automated checks catch this every run.</li>
+        <li><strong>Judge on hundreds of games, not one weekend.</strong> Football is noisy, so I rate the probabilities (log loss) over a full season rather than headline accuracy over a few matches.</li>
+      </ul>
+      <p><strong>Next steps:</strong> add expected-goals (xG) data as features, and retrain after every matchday instead of once per season.</p>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

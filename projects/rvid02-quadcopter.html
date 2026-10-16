@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lightweight Inspection Quadcopter | Ben Altangerel</title>
+  <meta name="description" content="Redesign of an FPV inspection quadcopter for mass and flight performance: laser-cut plywood frame, FEA, and evidence-based battery and propeller selection.">
+  <meta property="og:title" content="Lightweight Inspection Quadcopter | Ben Altangerel">
+  <meta property="og:description" content="Redesign of an FPV inspection quadcopter: laser-cut plywood frame, FEA, and battery and propeller selection.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="brand">Ben <span>Altangerel</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="back-link">&larr; All projects</a>
+        <p class="eyebrow">AER21003 Aerospace Design II &middot; University of Sheffield &middot; 2022&ndash;23 &middot; Team of 5</p>
+        <h1>Lightweight Inspection Quadcopter</h1>
+        <p class="summary">
+          Our team redesigned the client's FPV quadcopter, used to film toxic industrial sites, to <strong>cut its mass and improve flight performance</strong>.
+          We nicknamed it "Marilyn MonDrone". As <strong>Performance Lead</strong>, I co-led the battery and propeller selection that set its weight, thrust and stability.
+        </p>
+
+        <img class="cover" src="../images/rvid02/photo-finished.jpg" style="max-height: 760px; object-position: center 50%" alt="The finished laser-cut plywood quadcopter with tri-blade propellers and 3D-printed GoPro mount">
+
+        <div class="results">
+          <div><strong>0.45 kg</strong><span>all-up mass including battery (frame and parts under the 400&nbsp;g limit)</span></div>
+          <div><strong>5.4 : 1</strong><span>thrust-to-weight at just 50% throttle</span></div>
+          <div><strong>~1 hour</strong><span>of 3D printing, against a 24-hour limit</span></div>
+          <div><strong>+24%</strong><span>more electronics bay area than the previous design</span></div>
+        </div>
+        <p class="specs">Fusion 360 &middot; FEA &middot; Laser-cut plywood &middot; Battery &amp; propeller selection &middot; Trade-off analysis</p>
+      </div>
+    </section>
+
+    <article class="container case-study">
+
+      <h2>The brief</h2>
+      <p>
+        The client, AeroMAP (the module's simulated client), wanted its RVID02 inspection drone optimised for flight duration and performance.
+        The key requirements were:
+      </p>
+      <ul>
+        <li>a lighter frame without losing strength</li>
+        <li>less 3D-printing time</li>
+        <li>the best propeller and battery for the existing motors</li>
+        <li>a sustainable design</li>
+      </ul>
+      <p>
+        Hard limits: under 400&nbsp;g without battery, within 300&nbsp;mm, at least 7 minutes of flight while carrying a GoPro, and FPV flight with failsafe motor cut-off.
+      </p>
+
+      <h2>My role: Performance Lead</h2>
+      <!-- TODO (Ben): your team's documents list you as Performance Lead (Henry Morgan as Propulsion Lead). Edit if your role changed. -->
+      <ul>
+        <li><strong>Battery and propeller selection</strong> (with the Propulsion Lead): set the selection criteria at concept stage, then made the final choices.</li>
+        <li><strong>Aerodynamics study</strong> for the assessment and demonstration gate review.</li>
+        <li><strong>Risk register:</strong> wrote the project risk register, covering 15 risks with owners and mitigations.</li>
+        <li><strong>Testing phase:</strong> part of the flight-test team.</li>
+      </ul>
+
+      <h2>Airframe: light, strong and quick to make</h2>
+      <ul>
+        <li><strong>Plywood over plastic:</strong> plywood has a higher specific strength than the PLA or acrylic on offer, and it's more sustainable. The frame is laser-cut, so only the GoPro mount is 3D-printed (about 1 hour 8 minutes of printing).</li>
+        <li><strong>Iterated for strength:</strong> the first frame used 14 pieces with grain aligned to each load, but relied on glued joints. We replaced it with a single 6&nbsp;mm plate with straight arms and filleted corners to spread stress.</li>
+        <li><strong>Checked with FEA:</strong> static stress at steady flight (50% thrust) and at maximum upward acceleration (100% thrust), which roughly doubled the stress, as predicted.</li>
+        <li><strong>Designed for integration:</strong> a removable electronics plate with 24% more usable area than the previous drone, and a rotatable camera mount.</li>
+      </ul>
+      <div class="gallery quad">
+        <figure>
+          <img src="../images/rvid02/concept-sketch.jpg" alt="Hand sketch of the frame concept">
+          <figcaption>Concept sketch</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/rvid02/render-final.jpg" alt="CAD render of the final quadcopter design carrying a GoPro">
+          <figcaption>Final CAD design</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/rvid02/fea-max-thrust.jpg" alt="FEA stress plot of the airframe at maximum thrust">
+          <figcaption>FEA at maximum thrust</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/rvid02/photo-frame.jpg" alt="The real laser-cut plywood frame assembled in the workshop">
+          <figcaption>The laser-cut plywood frame, built</figcaption>
+        </figure>
+      </div>
+      <figure class="diagram">
+        <img src="../images/rvid02/photo-electronics.jpg" alt="Motors, ESC board, flight controller and receiver wired up on a bench before integration">
+        <figcaption>Motors, ESC and avionics wired up before integration</figcaption>
+      </figure>
+
+      <h2>Battery selection</h2>
+      <p>
+        We compared four LiPo options on the existing motors. Because the plywood frame was so light, the smallest battery still gave a large thrust margin, so we chose the
+        <strong>GNB 850&nbsp;mAh 3S</strong>. It kept the all-up mass to 0.45&nbsp;kg and gave a 5.4 : 1 thrust-to-weight ratio at only 50% throttle.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Battery (3S)</th><th>Battery mass</th><th>All-up mass</th><th>Thrust-to-weight (full throttle)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>850 mAh (chosen)</strong></td><td><strong>78 g</strong></td><td><strong>0.450 kg</strong></td><td><strong>14.2</strong></td></tr>
+            <tr><td>1300 mAh</td><td>113 g</td><td>0.485 kg</td><td>13.1</td></tr>
+            <tr><td>1550 mAh</td><td>140 g</td><td>0.512 kg</td><td>12.4</td></tr>
+            <tr><td>2200 mAh</td><td>185 g</td><td>0.557 kg</td><td>11.4</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Propeller selection</h2>
+      <p>
+        The drone films inspection targets, so <strong>stable, efficient flight mattered more than raw thrust</strong>. We scored five propeller types for suitability
+        and efficiency. Two tied, so we broke the tie on the mission and chose the low-pitch (~3&Prime;) tri-blade for stability during filming. At 5.1&Prime;, it is slightly
+        longer than the bi-blade, which closes most of the efficiency gap, while keeping plenty of thrust.
+      </p>
+      <div class="table-wrap">
+        <table class="score-table">
+          <thead><tr><th>Propeller</th><th>Suitability</th><th>Efficiency</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr class="chosen"><td><strong>Low pitch (~3&Prime;) tri-blade (chosen)</strong></td><td><span class="score mid">3</span></td><td><span class="score high">5</span></td><td><strong>8</strong></td></tr>
+            <tr><td>Bi-blade (~5&Prime; pitch)</td><td><span class="score high">4</span></td><td><span class="score high">4</span></td><td>8</td></tr>
+            <tr><td>Medium pitch (~4&Prime;) tri-blade</td><td><span class="score high">4</span></td><td><span class="score mid">3</span></td><td>7</td></tr>
+            <tr><td>High pitch (~5&Prime;) tri-blade</td><td><span class="score mid">3</span></td><td><span class="score low">2</span></td><td>5</td></tr>
+            <tr><td>Quad-blade (~4.5&Prime; pitch)</td><td><span class="score low">2</span></td><td><span class="score low">2</span></td><td>4</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What I'd take into my next project</h2>
+      <ul>
+        <li><strong>Mass savings compound.</strong> A lighter frame allowed a smaller battery, which made the drone lighter again.</li>
+        <li><strong>Design for the manufacturing process.</strong> Switching the frame from 3D printing to laser-cut plywood cut print time to about an hour.</li>
+      </ul>
+
+      <p style="margin-top:32px"><a href="../index.html#projects" class="btn outline">&larr; Back to all projects</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span class="year"></span> Ben Altangerel</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

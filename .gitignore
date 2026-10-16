@@ -1,0 +1,7 @@
+# Keep source documents off the public site (they contain personal details)
+dissertation*.pdf
+source-docs/
+backups/
+
+# Out-of-date PDF export; rebuild with build-pdf.ps1 before publishing it
+Ben-Altangerel-Portfolio.pdf

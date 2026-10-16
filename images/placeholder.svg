@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <rect width="1600" height="1000" fill="#e8edf3"/>
+  <g stroke="#c5cfdb" stroke-width="2">
+    <path d="M0 250H1600M0 500H1600M0 750H1600M400 0V1000M800 0V1000M1200 0V1000"/>
+  </g>
+  <g fill="none" stroke="#8a9bb0" stroke-width="10">
+    <circle cx="800" cy="460" r="120"/>
+    <circle cx="800" cy="460" r="40"/>
+  </g>
+  <text x="800" y="680" font-family="Segoe UI, Arial, sans-serif" font-size="56" fill="#5b6b80" text-anchor="middle">Replace with your image</text>
+</svg>
